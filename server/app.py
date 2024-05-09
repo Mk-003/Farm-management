@@ -43,6 +43,10 @@ revoked_tokens = set()
 #     return wrapper
 
 # User Registration
+
+
+
+
 class UserRegister(Resource):
     @cross_origin()
     def post(self):
@@ -597,3 +601,7 @@ class AdminServiceOrders(Resource):
 
 api.add_resource(AdminServiceOrders, '/adminServiceOrders')
 
+
+
+if __name__ == '__main__':
+    app.run(port=5555, debug=True)
