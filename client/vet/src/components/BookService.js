@@ -1,9 +1,10 @@
+// this is the cart for booking
 import { useContext, useEffect, useState } from 'react';
-import { cartContext } from "./context/Context";
+import { basketContext } from "./component/ServiceContext";
 import { NavLink } from "react-router-dom";
 
-function ClientCart() {
-    const { state, dispatch } = useContext(cartContext);
+function ClientBasket() {
+    const { state, dispatch } = useContext(basketContext);
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -52,24 +53,24 @@ function ClientCart() {
     };
 
     return (
-        <div className="client-cart-page">
+        <div className="client-basket-page">
             {state.length === 0 ? (
-                <div className="empty-cart">
-                    <h2>Your cart is empty</h2>
+                <div className="empty-basket">
+                    <h2>Your basket is empty</h2>
                     <img src="https://cdn.dribbble.com/users/2046015/screenshots/4591856/media/99db7af8c3d839dd65017f76ae434785.gif" alt="" />
                 </div>            
             ) : (
                 <>
-                    <h2>Shopping Cart</h2>
-                    <div className="client-cart">
-                        <div className="client-cart-titles">
+                    <h2>Shopping Basket</h2>
+                    <div className="client-basket">
+                        <div className="client-basket-titles">
                             <h4>Product</h4>
                             <h4>Price</h4>
                             <h4>Quantity</h4>
                             <h4>Total</h4>
                         </div>
                         {state.map((item, index) => (
-                            <div className="client-cart-card" key={index}>
+                            <div className="client-basket-card" key={index}>
                                 <div className="product-details">
                                     <img src={item.image_url} alt={item.name} />
                                     <div className="product-name">
@@ -94,7 +95,7 @@ function ClientCart() {
                             <button className='button' onClick={handlePlaceOrder}>Checkout</button>
                         </div>
                         <div className="continue-shopping">
-                            <NavLink className="client-nav-link" to='/client/products'> Continue Shopping</NavLink>
+                            <NavLink className="component-nav-link" to='/component/products'> Continue Shopping</NavLink>
                         </div>
                     </div>
                 </>
@@ -103,4 +104,4 @@ function ClientCart() {
     );
 }
 
-export default ClientCart;
+export default ClientBasket;

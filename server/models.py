@@ -227,6 +227,21 @@ class Product(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f'<Product {self.name} from seller {self.seller_id}>'
+    
+# class Service(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     name = db.Column(db.String(100), nullable=False)
+#     price = db.Column(db.Float, nullable=False)
+#     description = db.Column(db.Text, nullable=False)
+#     image_url = db.Column(db.String(200), nullable=False)
+#     quantity_available = db.Column(db.Integer, nullable=False)
+
+
+#     seller_id = db.Column(db.Integer, db.ForeignKey('seller.id'), nullable=False)
+#     seller = relationship("Seller", back_populates="services")
+
+#     def __repr__(self):
+#         return f'<Service {self.name}>'    
 
 
 class Order(db.Model, SerializerMixin):

@@ -17,8 +17,7 @@ function ClientProducts(){
           });
     }, []);
 
-    // const globalState = useContext(cartContext);
-    // const dispatch = globalState.dispatch;
+    
     const globalState = useContext(cartContext) || { dispatch: () => {} };
 const { dispatch } = globalState;
 

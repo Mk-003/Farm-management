@@ -1,17 +1,20 @@
-import React, { useEffect, useState } from 'react';
-// import './clientOrder.css';
+//post order to serviceorders. this i a booking
+//
 
-function ClientOrder() {
-    const [orders, setOrders] = useState([]);
+
+import React, { useEffect, useState } from 'react';
+
+function ServiceOrder() {
+    const [serviceOrders, setServiceOrders] = useState([]);
 
     useEffect(() => {
-        fetchOrders();
+        fetchserviceOrders();
     }, []);
     
-    const fetchOrders = async () => {
+    const fetchserviceOrders = async () => {
         try {
             const token = localStorage.getItem('access_token');
-            const response = await fetch("http://127.0.0.1:5555/orders", {
+            const response = await fetch("http://127.0.0.1:5555/serviceorders", {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -20,23 +23,21 @@ function ClientOrder() {
                 throw new Error('Failed to fetch orders');
             }
             const data = await response.json();
-            setOrders(data);
+            setServiceOrders(data);
         } catch (error) {
             console.error('Error fetching orders data:', error);
         }
     };
-    
-    
 
     return (
         <>
-            {orders.length === 0 ? (
+            {serviceOrders.length === 0 ? (
                 <div className='no-orders'>
                     <h2>No Orders</h2>
                     <img src="/noOrders.jpg" alt="" />
                 </div>   
             ) : (
-                <div className="client-order-container">
+                <div className="service-order-container">
                     {orders.map(order => (
                         <div className="order-card" key={order.order_id}>
                             <div className="order-details">
@@ -49,13 +50,13 @@ function ClientOrder() {
                                 </div>
                             </div>
                             
-                            {order.products.map((product) => (
-                                <div className="all-products" key={product.name}>
-                                    <div className="single-product">
-                                        <img src={product.image} alt="" />
-                                        <div className="single-product-details">
-                                            <span className='product-name'>{product.name}</span>
-                                            <span className='product-price'>{product.price} <span className='secondaryText'>x{product.quantity}</span></span>
+                            {order.services.map((service) => (
+                                <div className="all-services" key={service.name}>
+                                    <div className="single-service">
+                                        <img src={service.image} alt="" />
+                                        <div className="single-service-details">
+                                            <span className='service-name'>{service.name}</span>
+                                            <span className='service-price'>{service.price} <span className='secondaryText'>x{service.quantity}</span></span>
                                         </div>  
                                     </div>
                                 </div>
@@ -69,4 +70,4 @@ function ClientOrder() {
     );
 }
 
-export default ClientOrder;
+export default ServiceOrder;

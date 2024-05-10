@@ -3,16 +3,19 @@
 
 import React from 'react';
 
-import ClientCart from './components/ClientCart';
-import ClientProducts from './components/ClientProducts';
-
+// import ClientCart from './components/ClientCart';
+// import ClientProducts from './components/ClientProducts';
+// import ClientServices from './components/ClientServices';
+import ClientCart  from './components/ClientCart'
 
 function App() {
   return (
-    <>
-    {/* <ClientCart /> */}
-    <ClientProducts />
-    </>
+  
+    <di>
+    <ClientCart />
+    </di>
+    
+  
   );
 }
 
