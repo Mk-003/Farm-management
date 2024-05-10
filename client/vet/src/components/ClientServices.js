@@ -1,5 +1,5 @@
 import { useEffect,useState } from "react";
-
+// import { cartContext } from "./context/Context";
 
 function ClientServices(){
 
@@ -14,14 +14,14 @@ function ClientServices(){
         .catch(error =>{
             console.error('Error fetching services data:', error);
         });
-   []});
+   }, []);
 
 
     return(
     <div className="services-container">
      {services.map((service) =>(
        <div key={service.id}>
-         <img src={image_url} alt="category"/>
+         <img src={service.image_url} alt="category"/>
          <span className="secondaryText p-price">
                             <span style={{color:"orange"}}>$</span>
                             <span>{service.price}</span>

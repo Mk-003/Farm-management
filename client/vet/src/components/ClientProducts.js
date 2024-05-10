@@ -1,13 +1,13 @@
-import React, {  useEffect, useState } from "react";
+import React, {useContext,  useEffect, useState } from "react";
 // import './Product.css';
-// import { cartContext } from "../context/Context";
+import { cartContext } from "./context/Context";
 
 function ClientProducts(){
     const [products, setProducts] = useState([]);
     const [sortOption, setSortOption] = useState('Default'); // State to hold the current sorting option
 
     useEffect(() => {
-        fetch("http://127.0.0.1:5555/products")
+        fetch("/products")
           .then(resp => resp.json())
           .then((data) => {
             setProducts(data);
