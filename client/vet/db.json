@@ -1,0 +1,363 @@
+{
+  "admins": [
+      {
+          "id": 1,
+          "username": "admin1",
+          "email": "admin1@gmail.com",
+          "password": "hashed_password"
+      },
+      {
+          "id": 2,
+          "username": "admin2",
+          "email": "admin2@gmail.com",
+          "password": "hashed_password"
+      }
+  ],
+  "users": [
+      {
+          "id": 1,
+          "username": "user1",
+          "email": "user1@gmail.com",
+          "phone_number": 1234567890,
+          "password": "hashed_password",
+          "confirm_password": "hashed_password"
+      },
+      {
+          "id": 2,
+          "username": "user2",
+          "email": "user2@gmail.com",
+          "phone_number": 9876543210,
+          "password": "hashed_password",
+          "confirm_password": "hashed_password"
+      }
+  ],
+  "products": [
+      {
+          "id": 1,
+          "name": "Product 1",
+          "description": "Description of Product 1",
+          "price": 19.99,
+          "image_url": "product1.jpg",
+          "quantity_available": 100,
+          "seller_id": 1
+      },
+      {
+          "id": 2,
+          "name": "Product 2",
+          "description": "Description of Product 2",
+          "price": 29.99,
+          "image_url": "product2.jpg",
+          "quantity_available": 50,
+          "seller_id": 2
+      },
+  
+      {
+          "id": 3,
+          "name": "Product 3",
+          "description": "Description of Product 3",
+          "price": 39.99,
+          "image_url": "product3.jpg",
+          "quantity_available": 20,
+          "seller_id": 1
+      },
+      {
+          "id": 4,
+          "name": "Product 4",
+          "description": "Description of Product 4",
+          "price": 49.99,
+          "image_url": "product4.jpg",
+          "quantity_available": 10,
+          "seller_id": 2
+      },
+      {
+          "id": 5,
+          "name": "Product 5",
+          "description": "Description of Product 5",
+          "price": 59.99,
+          "image_url": "product5.jpg",
+          "quantity_available": 30,
+          "seller_id": 1
+      },
+      {
+          "id": 6,
+          "name": "Product 6",
+          "description": "Description of Product 6",
+          "price": 69.99,
+          "image_url": "product6.jpg",
+          "quantity_available": 5,
+          "seller_id": 2
+      },
+      {
+          "id": 7,
+          "name": "Product 7",
+          "description": "Description of Product 7",
+          "price": 79.99,
+          "image_url": "product7.jpg",
+          "quantity_available": 15,
+          "seller_id": 1
+      }
+  ],
+  "product_orders": [
+      {
+          "id": 1,
+          "total_price": 49.99,
+          "status": "completed",
+          "user_id": 1
+      },
+
+      {
+          "id": 2,
+          "total_price": 99.99,
+          "status": "pending",
+          "user_id": 2
+      },
+      {
+          "id": 3,
+          "total_price": 29.99,
+          "status": "completed",
+          "user_id": 1
+      },
+      {
+          "id": 4,
+          "total_price": 39.99,
+          "status": "pending",
+          "user_id": 2
+      },
+      {
+          "id": 5,
+          "total_price": 19.99,
+          "status": "completed",
+          "user_id": 1
+      },
+      {
+          "id": 6,
+          "total_price": 59.99,
+          "status": "completed",
+          "user_id": 2
+      },
+      {
+          "id": 7,
+          "total_price": 79.99,
+          "status": "pending",
+          "user_id": 1
+      }
+  ],
+  "product_order_items": [
+      {
+          "id": 1,
+          "quantity": 2,
+          "product_order_id": 1,
+          "product_id": 1
+      },
+   
+      {
+          "id": 2,
+          "quantity": 1,
+          "product_order_id": 2,
+          "product_id": 2
+      },
+      {
+          "id": 3,
+          "quantity": 3,
+          "product_order_id": 3,
+          "product_id": 3
+      },
+      {
+          "id": 4,
+          "quantity": 1,
+          "product_order_id": 4,
+          "product_id": 4
+      },
+      {
+          "id": 5,
+          "quantity": 2,
+          "product_order_id": 5,
+          "product_id": 5
+      },
+      {
+          "id": 6,
+          "quantity": 1,
+          "product_order_id": 6,
+          "product_id": 6
+      },
+      {
+          "id": 7,
+          "quantity": 4,
+          "product_order_id": 7,
+          "product_id": 7
+      }
+  ],
+  "services": [
+      {
+          "id": 1,
+          "name": "Service 1",
+          "description": "Description of Service 1",
+          "price": 99.99,
+          "image_url": "service1.jpg",
+          "duration": 60,
+          "seller_id": 1
+      },
+      
+      {
+          "id": 2,
+          "name": "Service 2",
+          "description": "Description of Service 2",
+          "price": 149.99,
+          "image_url": "service2.jpg",
+          "duration": 90,
+          "seller_id": 2
+      },
+      {
+          "id": 3,
+          "name": "Service 3",
+          "description": "Description of Service 3",
+          "price": 199.99,
+          "image_url": "service3.jpg",
+          "duration": 120,
+          "seller_id": 1
+      },
+      {
+          "id": 4,
+          "name": "Service 4",
+          "description": "Description of Service 4",
+          "price": 249.99,
+          "image_url": "service4.jpg",
+          "duration": 150,
+          "seller_id": 2
+      },
+      {
+          "id": 5,
+          "name": "Service 5",
+            "description": "Description of Service 7",
+            "price": 399.99,
+            "image_url": "service7.jpg",
+            "duration": 240,
+            "seller_id": 1
+        },
+        {
+            "id": 6,
+            "name": "Service 6",
+            "description": "Description of Service 8",
+            "price": 449.99,
+            "image_url": "service8.jpg",
+            "duration": 270,
+            "seller_id": 2
+        },
+        {
+            "id": 7,
+            "name": "Service 7",
+            "description": "Description of Service 9",
+            "price": 499.99,
+            "image_url": "service9.jpg",
+            "duration": 300,
+            "seller_id": 1
+          }
+        ],
+        "service_orders": [
+              {
+                  "id": 1,
+                  "total_price": 99.99,
+                  "status": "completed",
+                  "user_id": 1
+              },
+              {
+                  "id": 2,
+                  "total_price": 149.99,
+                  "status": "pending",
+                  "user_id": 2
+              }
+,
+              {
+                  "id": 3,
+                  "total_price": 199.99,
+                  "status": "completed",
+                  "user_id": 1
+              },
+              {
+                  "id": 4,
+                  "total_price": 249.99,
+                  "status": "pending",
+                  "user_id": 2
+              },
+          
+              {
+                  "id": 5,
+                  "total_price": 299.99,
+                  "status": "completed",
+                  "user_id": 1
+              },
+              {
+                  "id": 6,
+                  "total_price": 349.99,
+                  "status": "pending",
+                  "user_id": 2
+              },
+          
+              {
+                  "id": 7,
+                  "total_price": 399.99,
+                  "status": "completed",
+                  "user_id": 1
+              },
+              {
+                  "id": 8,
+                  "total_price": 449.99,
+                  "status": "pending",
+                  "user_id": 2
+              }
+          ],
+          "service_order_items": [
+              {
+                  "id": 1,
+                  "quantity": 1,
+                  "service_order_id": 1,
+                  "service_id": 1
+              },
+              {
+                  "id": 2,
+                  "quantity": 2,
+                  "service_order_id": 2,
+                  "service_id": 2
+              },
+          
+              {
+                  "id": 3,
+                  "quantity": 3,
+                  "service_order_id": 3,
+                  "service_id": 3
+              },
+              {
+                  "id": 4,
+                  "quantity": 4,
+                  "service_order_id": 4,
+                  "service_id": 4
+              },
+          
+              {
+                  "id": 5,
+                  "quantity": 5,
+                  "service_order_id": 5,
+                  "service_id": 5
+              },
+              {
+                  "id": 6,
+                  "quantity": 6,
+                  "service_order_id": 6,
+                  "service_id": 6
+              },
+          
+              {
+                  "id": 7,
+                  "quantity": 7,
+                  "service_order_id": 7,
+                  "service_id": 7
+              },
+              {
+                  "id": 8,
+                  "quantity": 8,
+                  "service_order_id": 8,
+                  "service_id": 8
+              }
+          ]
+      }
+      

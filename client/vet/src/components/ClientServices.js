@@ -7,7 +7,7 @@ function ClientServices() {
     const [sortOption, setSortOption] = useState('Default'); // State to hold the current sorting option
 
     useEffect(() => {
-        fetch("/services")
+        fetch("http://localhost:3000/services")
             .then(resp => resp.json())
             .then((data) => {
                 setServices(data);

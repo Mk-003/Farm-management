@@ -7,7 +7,7 @@ function ClientProducts(){
     const [sortOption, setSortOption] = useState('Default'); // State to hold the current sorting option
 
     useEffect(() => {
-        fetch("/products")
+        fetch("http://localhost:3000/products")
           .then(resp => resp.json())
           .then((data) => {
             setProducts(data);
