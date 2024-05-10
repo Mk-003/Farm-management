@@ -1,15 +1,14 @@
-import './navbar.css'
+// import './navbar.css'
 import { NavLink } from "react-router-dom"
 // import { BiAlignRight } from 'react-icons/bi'
 import { useContext } from 'react'
+import { cartContext } from "./context/Context";
+
 
 
 function ClientNavbar() {
     const { state } = useContext(cartContext);
-    //console.log("Cart State From Navbar:", state);
-
-    // Calculate total quantity of items in the cart
-    //const totalQuantity = state.reduce((total, item) => total + item.quantity, 0);
+   
     const totalQuantity = state.reduce((total, item) => total + item.quantity, 0);
 
     return (

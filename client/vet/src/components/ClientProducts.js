@@ -19,6 +19,9 @@ function ClientProducts(){
 
     // const globalState = useContext(cartContext);
     // const dispatch = globalState.dispatch;
+    const globalState = useContext(cartContext) || { dispatch: () => {} };
+const { dispatch } = globalState;
+
 
     // Function to handle sorting based on the selected option
     const handleSort = (event) => {
@@ -69,7 +72,7 @@ function ClientProducts(){
                         </span>
                         <span className='primaryText'>{product.name}</span>
                         <span className='secondaryText'>{product.description}</span>
-                        {/* <button className="p-buttons" onClick={() => dispatch({type:'ADD', payload:product})}>Add to cart</button> */}
+                        <button className="p-buttons" onClick={() => dispatch({type:'ADD', payload:product})}>Add to cart</button>
                     </div>
                 ))}
             </div>

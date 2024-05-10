@@ -1,21 +1,29 @@
-// import logo from './logo.svg';
-// import './App.css';
 
-import ClientProducts from "./components/ClientProducts";
-// import ClientServices from "./components/ClientServices";
+// App.js
 
+import React from 'react';
+
+import ClientCart from './components/ClientCart';
+import ClientProducts from './components/ClientProducts';
 
 
 function App() {
-
-
   return (
-    <div className="App">
-      <ClientProducts />
-      {/* <ClientServices /> */}
-      </div>
-      
+    <>
+    {/* <ClientCart /> */}
+    <ClientProducts />
+    </>
   );
 }
 
 export default App;
+
+
+
+
+
+
+
+
+
+

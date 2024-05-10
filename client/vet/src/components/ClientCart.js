@@ -1,37 +1,29 @@
-import { useContext, useState, useEffect } from 'react';
-import './clientCart.css';
-import { cartContext } from '../context/Context';
-import { NavLink } from "react-router-dom"
+import { useContext, useEffect, useState } from 'react';
+import { cartContext } from "./context/Context";
+import { NavLink } from "react-router-dom";
 
 function ClientCart() {
-    const globalState = useContext(cartContext);
-    const state = globalState.state;
-    const dispatch = globalState.dispatch;
+    const { state, dispatch } = useContext(cartContext);
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
 
+    useEffect(() => {
+        // Any side effects can be handled here, if needed
+    }, []);
+
     const total = state.reduce((total, item) => {
-        console.log("this is the type of data", typeof item.quantity);
         return total + item.price * item.quantity;
     }, 0);
-
-    console.log("this is the total", total)
 
     const handlePlaceOrder = async () => {
         setLoading(true);
         setError(null);
         setSuccess(false);
         
-        console.log("a string",{
-            total: total,
-            items: state.map(item => ({ id: item.id, quantity: item.quantity })),
-        })
-
         try {
             const res = await fetch('http://127.0.0.1:5555/orders', {
-
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -76,36 +68,24 @@ function ClientCart() {
                             <h4>Quantity</h4>
                             <h4>Total</h4>
                         </div>
-                        {state.map((item, index) => {
-                            //item.quantity = 1
-                            console.log("this is the item", item)
-                            return (
-                                
-                                <div className="client-cart-card" key={index}>
-                                    <div className="product-details">
-                                        <img src={item.image_url} alt={item.name} />
-                                        <div className="product-name">
-                                            <p>{item.name}</p>
-                                            <button onClick={() => dispatch({ type: 'REMOVE', payload: item })}>Remove</button>
-                                        </div>   
-                                    </div>
-                                    <p>${item.price}</p>
-                                    <div className="quantity">
-                                        <button onClick={() => {
-                                            if (item.quantity > 1) {
-                                                dispatch({ type: 'DECREASE', payload: item });
-                                            } else {
-                                                dispatch({ type: 'REMOVE', payload: item });
-                                            }
-                                        }}>-</button>
-                                        <span>{item.quantity}</span>
-                                        {/*console.log("this is the quantity",item.quantity)*/}
-                                        <button onClick={() => dispatch({ type: 'INCREASE', payload: item })}>+</button>
-                                    </div>
-                                    <p className='total-price'>${item.quantity * item.price}</p>
+                        {state.map((item, index) => (
+                            <div className="client-cart-card" key={index}>
+                                <div className="product-details">
+                                    <img src={item.image_url} alt={item.name} />
+                                    <div className="product-name">
+                                        <p>{item.name}</p>
+                                        <button onClick={() => dispatch({ type: 'REMOVE', payload: item })}>Remove</button>
+                                    </div>   
                                 </div>
-                            );
-                        })}
+                                <p>${item.price}</p>
+                                <div className="quantity">
+                                    <button onClick={() => dispatch({ type: 'DECREASE', payload: item })}>-</button>
+                                    <span>{item.quantity}</span>
+                                    <button onClick={() => dispatch({ type: 'INCREASE', payload: item })}>+</button>
+                                </div>
+                                <p className='total-price'>${item.quantity * item.price}</p>
+                            </div>
+                        ))}
                         <div className="total">
                             <h4>Subtotal</h4>
                             <h4>${total}</h4>
@@ -124,9 +104,3 @@ function ClientCart() {
 }
 
 export default ClientCart;
-
-
-
-
-
-
