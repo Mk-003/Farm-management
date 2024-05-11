@@ -11,7 +11,7 @@ function ClientOrder() {
     const fetchOrders = async () => {
         try {
             const token = localStorage.getItem('access_token');
-            const response = await fetch("http://127.0.0.1:5555/orders", {
+            const response = await fetch("http://localhost:3000/product_orders", {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
