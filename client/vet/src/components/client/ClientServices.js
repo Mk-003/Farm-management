@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { basketContext } from "./context/ServiceContext";
+import { basketContext } from "../context/ServiceContext";
 
 
 function ClientServices() {

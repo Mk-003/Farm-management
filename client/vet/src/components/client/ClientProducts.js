@@ -1,6 +1,6 @@
 import React, {useContext,  useEffect, useState } from "react";
 // import './Product.css';
-import { cartContext } from "./context/Context";
+import { cartContext } from "../context/Context";
 
 function ClientProducts(){
     const [products, setProducts] = useState([]);

@@ -22,3 +22,7 @@ fetch orders for services made
 
 # servicecontext
 handles basket behaviour such add ,remove
+
+
+# babel dependencies
+npm install --save-dev @babel/plugin-proposal-private-property-in-object

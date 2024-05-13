@@ -4,10 +4,14 @@
 import React from 'react';
 
 // import ClientCart from './components/ClientCart';
-import ClientProducts from './components/ClientProducts';
-import ClientServices from './components/ClientServices';
-import ClientCart from './components/ClientCart';
+import ClientProducts from './components/client/ClientProducts';
+import ClientServices from './components/client/ClientServices';
+import ClientCart from './components/client/ClientCart';
+import RightProducts from './components/admin/AdminProductsPost';
+import AddServices from './components/admin/AdminServicePost';
 // import ClientCart  from './components/ClientCart'
+import History from './History';
+
 
 function App() {
   return (
@@ -15,7 +19,9 @@ function App() {
     <di>
     <ClientProducts/>
     <ClientServices />
-    <ClientCart />
+    <RightProducts />
+    <AddServices />
+    <History />
     </di>
     
   

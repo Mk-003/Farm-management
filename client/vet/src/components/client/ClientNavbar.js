@@ -2,8 +2,8 @@
 import { NavLink } from "react-router-dom"
 // import { BiAlignRight } from 'react-icons/bi'
 import { useContext } from 'react'
-import { cartContext } from "./context/Context"
-import { basketContext } from "./context/ServiceContext";
+import { cartContext } from "../context/Context"
+import { basketContext } from "../context/ServiceContext";
 
 
 

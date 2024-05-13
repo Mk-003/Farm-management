@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { cartContext } from "./context/Context";
+import { cartContext } from "../context/Context";
 import { NavLink } from "react-router-dom";
 
 function ClientCart() {
@@ -23,7 +23,7 @@ function ClientCart() {
         setSuccess(false);
         
         try {
-            const res = await fetch('http://127.0.0.1:5555/serviceorders', {
+            const res = await fetch('http://127.0.0.1:5555/orders', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ function ClientCart() {
             {state.length === 0 ? (
                 <div className="empty-cart">
                     <h2>Your cart is empty</h2>
-                    <img src="https://cdn.dribbble.com/users/2046015/screenshots/4591856/media/99db7af8c3d839dd65017f76ae434785.gif" alt="" />
+                    <img src="https://iconscout.com/lottie-animation/empty-shopping-cart-3580543" alt="" />
                 </div>            
             ) : (
                 <>
