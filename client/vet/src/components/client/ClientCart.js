@@ -1,13 +1,13 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, } from 'react';
 import { cartContext } from "../context/Context";
 import { NavLink } from "react-router-dom";
 
 function ClientCart() {
     const { state, dispatch } = useContext(cartContext);
 
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const [success, setSuccess] = useState(false);
+    // const [loading, setLoading] = useState(false);
+    // const [error, setError] = useState(null);
+    // const [success, setSuccess] = useState(false);
 
     useEffect(() => {
         // Any side effects can be handled here, if needed
@@ -18,9 +18,9 @@ function ClientCart() {
     }, 0);
 
     const handlePlaceOrder = async () => {
-        setLoading(true);
-        setError(null);
-        setSuccess(false);
+        // setLoading(true);
+        // setError(null);
+        // setSuccess(false);
         
         try {
             const res = await fetch('http://127.0.0.1:5555/orders', {
@@ -37,17 +37,18 @@ function ClientCart() {
             });
 
             if (res.ok) {
-                setSuccess(true);
+                // setSuccess(true);
                 // Clear the cart after successful order placement
                 dispatch({ type: 'CLEAR_CART' });
             } else {
-                setError('Failed to place order');
+                // setError('Failed to place order');
+                console.error('Failed to place order');
             }
         } catch (error) {
             console.error('Error:', error);
-            setError('An error occurred while processing your request');
-        } finally {
-            setLoading(false);
+            // setError('An error occurred while processing your request');
+        // } finally {
+        //     setLoading(false);
         }
     };
 

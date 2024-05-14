@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 
 
-function Products(){
+function AddProducts(){
 
     const [formData, setFormData] = useState({
         name: '',
@@ -79,4 +79,4 @@ function Products(){
     )
 }
 
-export default Products
+export default AddProducts

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function History() {
+function AdminHistory() {
     const [productsHistory, setProductsHistory] = useState([]);
     const [servicesHistory, setServicesHistory] = useState([]);
 
@@ -13,7 +13,7 @@ function History() {
 
     const fetchProductsHistory = async () => {
         try {
-            const response = await fetch('http://localhost:3000/product_orders');
+            const response = await fetch('/http://localhost:3000/productHistory');
             if (!response.ok) {
                 throw new Error('Failed to fetch products history');
             }
@@ -26,7 +26,7 @@ function History() {
 
     const fetchServicesHistory = async () => {
         try {
-            const response = await fetch('http://localhost:3000/service_orders');
+            const response = await fetch('/http://localhost:3000/serviceHistory');
             if (!response.ok) {
                 throw new Error('Failed to fetch services history');
             }
@@ -39,7 +39,7 @@ function History() {
 
     return (
         <div>
-            <h2>Products/Orders Purchased History</h2>
+            <h2>Products-Orders Purchased History</h2>
             <ul>
                 {productsHistory.map((product, index) => (
                     <li key={index}>
@@ -59,4 +59,4 @@ function History() {
     );
 }
 
-export default History;
+export default AdminHistory;

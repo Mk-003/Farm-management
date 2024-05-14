@@ -1,0 +1,103 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+.containerLog {
+    background-size: cover; 
+    background-position: center; 
+    height: 100vh; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    position: relative;
+    background-image: url(https://cff2.earth.com/uploads/2022/07/08123100/Pets-scaled.jpg);
+}
+
+.circle:first-child {
+    right: 20%;
+    top: 5%;
+    background: var(--orange-gradient);
+}
+
+.circle:nth-child(2) {
+    left: 20%;
+    bottom: 5%;
+    background: linear-gradient(164deg, #144e7cfc, #1877f2);
+}
+
+.glass-form-container {
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(5px);
+    border-radius: 10px;
+    padding: 60px;
+    max-width: fit-content;
+}
+
+.glass-form-container h2,
+.glass-form-container p,
+.form-group label,
+.register-span {
+    color: black;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group > input {
+    width: 100%; /* Adjust width for smaller screens */
+    max-width: 400px; /* Add maximum width for larger screens */
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.form-group > input::placeholder {
+    color: white;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 40px;
+}
+
+.btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+.glass-form-container a {
+    color: black;
+    text-decoration: none;
+}
+
+.glass-form-container a:hover {
+    text-decoration: underline;
+    color: #041e3a;
+}
+
+@media screen and (max-width: 768px) {
+    .glass-form-container {
+        padding: 30px;
+    }
+    
+    .form-control,
+    .btn {
+        font-size: 14px;
+    }
+}

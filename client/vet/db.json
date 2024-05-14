@@ -33,24 +33,6 @@
   ],
   "products": [
     {
-      "id": "1",
-      "name": "Product 1",
-      "description": "Description of Product 1",
-      "price": 19.99,
-      "image_url": "product1.jpg",
-      "quantity_available": 100,
-      "seller_id": 1
-    },
-    {
-      "id": "2",
-      "name": "Product 2",
-      "description": "Description of Product 2",
-      "price": 29.99,
-      "image_url": "product2.jpg",
-      "quantity_available": 50,
-      "seller_id": 2
-    },
-    {
       "id": "3",
       "name": "Product 3",
       "description": "Description of Product 3",
@@ -58,15 +40,6 @@
       "image_url": "product3.jpg",
       "quantity_available": 20,
       "seller_id": 1
-    },
-    {
-      "id": "4",
-      "name": "Product 4",
-      "description": "Description of Product 4",
-      "price": 49.99,
-      "image_url": "product4.jpg",
-      "quantity_available": 10,
-      "seller_id": 2
     },
     {
       "id": "5",
@@ -87,29 +60,20 @@
       "seller_id": 2
     },
     {
-      "id": "7",
-      "name": "Product 7",
-      "description": "Description of Product 7",
-      "price": 79.99,
-      "image_url": "product7.jpg",
-      "quantity_available": 15,
-      "seller_id": 1
-    },
-    {
-      "id": "8af0",
-      "name": " Mojo Ba",
-      "description": "Football shield",
-      "price": "300",
-      "image_url": "jghdvhvkdhvjbkdj,bjhc ,c,bhdhj.com",
-      "quantity_available": "23"
-    },
-    {
       "id": "59ee",
       "name": " Mojo Ba",
       "description": "dnmbsj",
       "price": "234",
       "image_url": "sbshtthsgvgvhs.som",
       "quantity_available": "1000"
+    },
+    {
+      "id": "1e0d",
+      "name": "Pellet",
+      "description": "Good for Calfs",
+      "price": "200",
+      "image_url": "tjhvhrj,fbjh,btrjjntr.n",
+      "quantity_available": "10"
     }
   ],
   "product_orders": [
@@ -238,15 +202,6 @@
       "seller_id": 2
     },
     {
-      "id": "5",
-      "name": "Service 5",
-      "description": "Description of Service 7",
-      "price": 399.99,
-      "image_url": "service7.jpg",
-      "duration": 240,
-      "seller_id": 1
-    },
-    {
       "id": "6",
       "name": "Service 6",
       "description": "Description of Service 8",
@@ -363,6 +318,144 @@
       "quantity": 8,
       "service_order_id": 8,
       "service_id": 8
+    }
+  ],
+  "likedProducts": [
+    {
+      "id": "1",
+      "name": "Product 1",
+      "description": "This is product 1",
+      "image_url": "url_to_image_1",
+      "price": 10
+    },
+    {
+      "id": "2",
+      "name": "Product 2",
+      "description": "This is product 2",
+      "image_url": "url_to_image_2",
+      "price": 20
+    }
+  ],
+  "likes": [
+    {
+      "id": "1",
+      "productId": 91,
+      "userId": 1
+    },
+    {
+      "id": "2",
+      "productId": 12,
+      "userId": 1
+    },
+    {
+      "id": "9f66",
+      "productId": null
+    },
+    {
+      "id": "3095",
+      "productId": null
+    },
+    {
+      "id": "41c4",
+      "productId": "59ee"
+    },
+    {
+      "id": "c8ea",
+      "productId": "6"
+    },
+    {
+      "id": "4774",
+      "productId": "5"
+    },
+    {
+      "id": "e400",
+      "productId": "3"
+    },
+    {
+      "id": "9c1d",
+      "productId": "6"
+    },
+    {
+      "id": "1e57",
+      "productId": "5"
+    },
+    {
+      "id": "f739",
+      "productId": null
+    },
+    {
+      "id": "beea",
+      "productId": "3"
+    },
+    {
+      "id": "bf5a",
+      "productId": null
+    },
+    {
+      "id": "62fa",
+      "productId": null
+    },
+    {
+      "id": "97b6",
+      "productId": "3"
+    },
+    {
+      "id": "9dae",
+      "productId": "59ee"
+    },
+    {
+      "id": "2328",
+      "productId": null
+    },
+    {
+      "id": "8612",
+      "productId": null
+    },
+    {
+      "id": "f3c9",
+      "productId": null
+    },
+    {
+      "id": "4151",
+      "productId": null
+    },
+    {
+      "id": "151d",
+      "productId": null
+    }
+  ],
+  "productHistory": [
+    {
+      "id": "1",
+      "productId": 1,
+      "userId": 1,
+      "liked": true,
+      "timestamp": "2023-03-10T10:00:00Z"
+    },
+    {
+      "id": "2",
+      "productId": 2,
+      "userId": 1,
+      "liked": false,
+      "timestamp": "2023-03-10T11:00:00Z"
+    }
+  ],
+  "serviceHistory": [
+    {
+      "id": "1",
+      "serviceId": 1,
+      "userId": 1,
+      "name": "Service 1",
+      "date": "2023-05-13",
+      "price": 50
+    },
+    {
+      "id": "2",
+      "serviceId": 2,
+      "userId": 1,
+      "name": "Service 2",
+      "date": "2023-05-14",
+      "price": 75
     }
   ]
 }

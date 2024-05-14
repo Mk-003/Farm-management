@@ -1,10 +1,11 @@
 import React, {useContext,  useEffect, useState } from "react";
-// import './Product.css';
+import './Product.css';
 import { cartContext } from "../context/Context";
 
-function ClientProducts(){
+function Products(){
     const [products, setProducts] = useState([]);
     const [sortOption, setSortOption] = useState('Default'); // State to hold the current sorting option
+    const [likedProducts, setLikedProducts] = useState(new Set()); 
 
     useEffect(() => {
         fetch("http://localhost:3000/products")
@@ -21,6 +22,8 @@ function ClientProducts(){
     const globalState = useContext(cartContext) || { dispatch: () => {} };
 const { dispatch } = globalState;
 
+
+    
 
     // Function to handle sorting based on the selected option
     const handleSort = (event) => {
@@ -71,7 +74,9 @@ const { dispatch } = globalState;
                         </span>
                         <span className='primaryText'>{product.name}</span>
                         <span className='secondaryText'>{product.description}</span>
-                        <button className="p-buttons" onClick={() => dispatch({type:'ADD', payload:product})}>Add to cart</button>
+                        
+                        
+                        <button className="add-to-cart-btn" onClick={() => dispatch({type:'ADD', payload:product})}>Add to cart</button>
                     </div>
                 ))}
             </div>
@@ -80,4 +85,4 @@ const { dispatch } = globalState;
 
 }
 
-export default ClientProducts;
+export default Products;

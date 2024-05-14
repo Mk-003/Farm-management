@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { basketContext } from "../context/ServiceContext";
+import './ClientServices'
 
-
-function ClientServices() {
+function Services() {
     const [services, setServices] = useState([]);
     const [sortOption, setSortOption] = useState('Default'); // State to hold the current sorting option
 
@@ -77,4 +77,4 @@ function ClientServices() {
     )
 }
 
-export default ClientServices;
+export default Services;
