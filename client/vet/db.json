@@ -34,12 +34,13 @@
   "products": [
     {
       "id": "3",
-      "name": "Product 3",
-      "description": "Description of Product 3",
-      "price": 39.99,
-      "image_url": "product3.jpg",
+      "name": "milk",
+      "description": "Fermented perfect",
+      "price": 45,
+      "image_url": "product3milk.jpg",
       "quantity_available": 20,
-      "seller_id": 1
+      "seller_id": 1,
+      "quantity": 27
     },
     {
       "id": "5",
