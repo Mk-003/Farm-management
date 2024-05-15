@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function AdminHistory() {
+function History() {
     const [productsHistory, setProductsHistory] = useState([]);
     const [servicesHistory, setServicesHistory] = useState([]);
 
@@ -59,4 +59,4 @@ function AdminHistory() {
     );
 }
 
-export default AdminHistory;
+export default History;

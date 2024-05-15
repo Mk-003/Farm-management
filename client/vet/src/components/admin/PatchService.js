@@ -102,7 +102,7 @@ import React, { useState, useEffect } from 'react';
 
 import './PatchServices.css';
 
-const UpdateService = () => {
+const PatchService = () => {
   const [services, setServices] = useState([]);
   const [selectedService, setSelectedService] = useState(null);
   const [updatedService, setUpdatedService] = useState({
@@ -118,7 +118,7 @@ const UpdateService = () => {
     // Fetch services from the backend
     const fetchServices = async () => {
       try {
-        const response = await fetch('http://localhost:3000/services');
+        const response = await fetch('/adminservices');
         if (response.ok) {
           const data = await response.json();
           setServices(data);
@@ -153,7 +153,7 @@ const UpdateService = () => {
       formData.append('quantity', updatedService.quantity);
       formData.append('image', updatedService.image); // Append the image to the form data
 
-      const response = await fetch(`http://localhost:3000/services/${selectedService.id}`, {
+      const response = await fetch(`/adminservices/${selectedService.id}`, {
         method: 'PATCH',
         body: formData
       });
@@ -197,4 +197,4 @@ const UpdateService = () => {
   );
 };
 
-export default UpdateService;
+export default PatchService;

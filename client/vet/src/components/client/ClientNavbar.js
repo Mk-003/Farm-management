@@ -8,10 +8,8 @@ import { basketContext } from "../context/ServiceContext";
 
 
 function ClientNavbar() {
-    const { state } = useContext(cartContext);
-    const {state} = useContext(basketContext);
-   
-    const totalQuantity = state.reduce((total, item) => total + item.quantity, 0);
+    
+    c
 
     return (
         <section className='h-wrapper'>

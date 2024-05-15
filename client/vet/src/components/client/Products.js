@@ -1,9 +1,9 @@
 
-
-
 import React, { useState, useEffect } from 'react';
+import Cart from './Cart';
 
-const ListingProductComponent = () => {
+
+const Products = () => {
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [sortOption, setSortOption] = useState('Default');
@@ -12,7 +12,7 @@ const ListingProductComponent = () => {
     // Fetch products from the backend
     const fetchProducts = async () => {
       try {
-        const response = await fetch('http://localhost:3000/products');
+        const response = await fetch('/userproducts');
         if (response.ok) {
           const data = await response.json();
           setProducts(data);
@@ -87,6 +87,7 @@ const ListingProductComponent = () => {
               <div>
                 <p>{product.description}</p>
                 <button onClick={() => handleAddToCart(product)}>Add to Cart</button>
+                <Cart />
               </div>
             )}
           </div>
@@ -96,5 +97,5 @@ const ListingProductComponent = () => {
   );
 };
 
-export default ListingProductComponent;
+export default Products;
 

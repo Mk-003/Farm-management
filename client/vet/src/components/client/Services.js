@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const Service = () => {
+const Services = () => {
   const [services, setServices] = useState([]);
   const [selectedService, setSelectedService] = useState(null);
   const [sortOption, setSortOption] = useState('Default');
@@ -9,7 +9,7 @@ const Service = () => {
     // Fetch services from the backend
     const fetchServices = async () => {
       try {
-        const response = await fetch('http://localhost:3000/services');
+        const response = await fetch('/userservices');
         if (response.ok) {
           const data = await response.json();
           setServices(data);
@@ -90,5 +90,5 @@ const Service = () => {
   );
 };
 
-export default Service;
+export default Services;
 

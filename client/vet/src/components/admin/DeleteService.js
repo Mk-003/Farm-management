@@ -4,13 +4,13 @@ import './DeleteService.css';
 
 
 
-function DeltService() {
+function DeleteService() {
     const [services, setServices] = useState([]);
 
     
 
     useEffect(() => {
-        fetch("http://localhost:3000/services")
+        fetch("/adminservices")
             .then(resp => resp.json())
             .then((data) => {
                 setServices(data);
@@ -24,7 +24,7 @@ function DeltService() {
 
     
     const handleDelete = (serviceId) => {
-        fetch(`http://localhost:3000/services/${serviceId}`, {
+        fetch(`/adminservices/${serviceId}`, {
             method: 'DELETE',
         })
             .then(resp => {
@@ -66,4 +66,4 @@ function DeltService() {
     )
 }
 
-export default DeltService;
+export default DeleteService;

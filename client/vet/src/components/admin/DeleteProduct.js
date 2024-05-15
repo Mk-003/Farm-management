@@ -4,11 +4,11 @@ import './DeleteProduct.css';
 
 
 
-function DeltProducts() {
+function DeleteProduct() {
     const [products, setProducts] = useState([]);
     
     useEffect(() => {
-        fetch("http://localhost:3000/products")
+        fetch("/adminproducts")
             .then(resp => resp.json())
             .then((data) => {
                 setProducts(data);
@@ -22,7 +22,7 @@ function DeltProducts() {
 
    
     const handleDelete = (productId) => {
-        fetch(`http://localhost:3000/products/${productId}`, {
+        fetch(`/adminproducts/${productId}`, {
             method: 'DELETE',
         })
             .then(resp => {
@@ -64,4 +64,4 @@ function DeltProducts() {
     )
 }
 
-export default DeltProducts;
+export default DeleteProduct;
