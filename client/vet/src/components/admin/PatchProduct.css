@@ -1,0 +1,60 @@
+.update-products {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .update-products h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .update-products select,
+  .update-products input[type="text"],
+  .update-products input[type="number"],
+  .update-products input[type="file"],
+  .update-products button {
+    display: block;
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .update-products button {
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .update-products button:hover {
+    background-color: #0056b3;
+  }
+  
+  .update-products input[type="file"] {
+    padding: 8px 10px;
+    height: auto;
+  }
+  
+  .update-products select {
+    padding: 8px 10px;
+  }
+  
+  .update-products input[type="file"]::file-selector-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .update-products input[type="file"]::file-selector-button:hover {
+    background-color: #0056b3;
+  }
+  

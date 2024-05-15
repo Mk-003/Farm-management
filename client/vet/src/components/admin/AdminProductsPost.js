@@ -1,6 +1,90 @@
-// import './rightProducts.css'
+// // import './rightProducts.css'
+// import React, { useState } from 'react';
+
+
+// function AddProducts(){
+
+//     const [formData, setFormData] = useState({
+//         name: '',
+//         description: '',
+//         price: '',
+//         image_url: '',
+//         quantity_available: '',
+//     });
+
+//     const handleChange = (e) => {
+//         const { name, value } = e.target;
+//         setFormData(prevData => ({
+//             ...prevData,
+//             [name]: value
+//         }));
+//     };
+
+//     const handleSubmit = async (e) => {
+//         e.preventDefault();
+//         try {
+//             const response = await fetch('http://localhost:3000/products', {
+//                 method: 'POST',
+//                 headers: {
+//                     'Content-Type': 'application/json',
+//                 },
+//                 body: JSON.stringify(formData),
+//             });
+//             if (!response.ok) {
+//                 throw new Error('Failed to create product');
+//             }
+//             // Optionally, you can reset the form fields here
+//             setFormData({
+//                 name: '',
+//                 description: '',
+//                 price: '',
+//                 image_url: '',
+//                 quantity_available: ''
+//             });
+//         } catch (error) {
+//             console.error('Error creating product:', error);
+//         }
+//     };
+
+//     return(
+//         <div className="right-products">
+//             <div className="right-products-form">
+//             <span>Add A Product</span>
+//             <form onSubmit={handleSubmit}>
+//                     <div>
+//                         <label htmlFor="name">Product Name</label>
+//                         <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Name" required />
+//                     </div>
+//                     <div>
+//                         <label htmlFor="description">Description</label>
+//                         <textarea name="description" value={formData.description} onChange={handleChange} placeholder="Description" required />
+//                     </div>
+//                     <div>
+//                         <label htmlFor="price">Price</label>
+//                         <input type="number" name="price" value={formData.price} onChange={handleChange} placeholder="Price" required />
+//                     </div>
+//                     <div>
+//                         <label htmlFor="quantity_available">Quantity</label>
+//                         <input type="number" name="quantity_available" value={formData.quantity_available} onChange={handleChange} placeholder="Quantity Available" required />
+//                     </div>
+//                     <div>
+//                         <label htmlFor="image_url">Image Url</label>
+//                         <input type="text" name="image_url" value={formData.image_url} onChange={handleChange} placeholder="Image URL" required />
+//                     </div>
+//                     <button type="submit">Add Product</button>
+//                 </form>
+//             </div>
+
+//         </div>
+//     )
+// }
+
+// export default AddProducts
+
+
 import React, { useState } from 'react';
 
+import './PostProducts.css';
 
 function AddProducts(){
 
@@ -8,7 +92,7 @@ function AddProducts(){
         name: '',
         description: '',
         price: '',
-        image_url: '',
+        image: null, // New state for the uploaded image
         quantity_available: '',
     });
 
@@ -20,15 +104,27 @@ function AddProducts(){
         }));
     };
 
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        setFormData(prevData => ({
+            ...prevData,
+            image: file
+        }));
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            const formDataWithImage = new FormData();
+            formDataWithImage.append('name', formData.name);
+            formDataWithImage.append('description', formData.description);
+            formDataWithImage.append('price', formData.price);
+            formDataWithImage.append('quantity_available', formData.quantity_available);
+            formDataWithImage.append('image', formData.image);
+
             const response = await fetch('http://localhost:3000/products', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
+                body: formDataWithImage,
             });
             if (!response.ok) {
                 throw new Error('Failed to create product');
@@ -38,7 +134,7 @@ function AddProducts(){
                 name: '',
                 description: '',
                 price: '',
-                image_url: '',
+                image: null,
                 quantity_available: ''
             });
         } catch (error) {
@@ -47,10 +143,10 @@ function AddProducts(){
     };
 
     return(
-        <div className="right-products">
-            <div className="right-products-form">
-            <span>Add A Product</span>
-            <form onSubmit={handleSubmit}>
+        <div className="post-products">
+            <div className="post-products-form">
+                <span>Add A Product</span>
+                <form onSubmit={handleSubmit}>
                     <div>
                         <label htmlFor="name">Product Name</label>
                         <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Name" required />
@@ -68,15 +164,14 @@ function AddProducts(){
                         <input type="number" name="quantity_available" value={formData.quantity_available} onChange={handleChange} placeholder="Quantity Available" required />
                     </div>
                     <div>
-                        <label htmlFor="image_url">Image Url</label>
-                        <input type="text" name="image_url" value={formData.image_url} onChange={handleChange} placeholder="Image URL" required />
+                        <label htmlFor="image">Image</label>
+                        <input type="file" name="image" onChange={handleImageChange} accept="image/*" />
                     </div>
                     <button type="submit">Add Product</button>
                 </form>
             </div>
-
         </div>
-    )
+    );
 }
 
-export default AddProducts
+export default AddProducts;

@@ -33,25 +33,6 @@
   ],
   "products": [
     {
-      "id": "3",
-      "name": "milk",
-      "description": "Fermented perfect",
-      "price": 45,
-      "image_url": "product3milk.jpg",
-      "quantity_available": 20,
-      "seller_id": 1,
-      "quantity": 27
-    },
-    {
-      "id": "5",
-      "name": "Product 5",
-      "description": "Description of Product 5",
-      "price": 59.99,
-      "image_url": "product5.jpg",
-      "quantity_available": 30,
-      "seller_id": 1
-    },
-    {
       "id": "6",
       "name": "Product 6",
       "description": "Description of Product 6",
@@ -69,12 +50,28 @@
       "quantity_available": "1000"
     },
     {
-      "id": "1e0d",
-      "name": "Pellet",
-      "description": "Good for Calfs",
-      "price": "200",
-      "image_url": "tjhvhrj,fbjh,btrjjntr.n",
-      "quantity_available": "10"
+      "id": "d221",
+      "name": "a",
+      "description": "as",
+      "price": "10",
+      "image_url": "as.pn",
+      "quantity_available": "11"
+    },
+    {
+      "id": "c489",
+      "name": "b",
+      "description": "ba",
+      "price": "12",
+      "image_url": "ba.bn",
+      "quantity_available": "7"
+    },
+    {
+      "id": "f63e",
+      "name": "c",
+      "description": "bd",
+      "price": "23",
+      "image_url": "ad.nm",
+      "quantity_available": "5"
     }
   ],
   "product_orders": [
@@ -176,15 +173,6 @@
       "seller_id": 1
     },
     {
-      "id": "2",
-      "name": "Service 2",
-      "description": "Description of Service 2",
-      "price": 149.99,
-      "image_url": "service2.jpg",
-      "duration": 90,
-      "seller_id": 2
-    },
-    {
       "id": "3",
       "name": "Service 3",
       "description": "Description of Service 3",
@@ -192,24 +180,6 @@
       "image_url": "service3.jpg",
       "duration": 120,
       "seller_id": 1
-    },
-    {
-      "id": "4",
-      "name": "Service 4",
-      "description": "Description of Service 4",
-      "price": 249.99,
-      "image_url": "service4.jpg",
-      "duration": 150,
-      "seller_id": 2
-    },
-    {
-      "id": "6",
-      "name": "Service 6",
-      "description": "Description of Service 8",
-      "price": 449.99,
-      "image_url": "service8.jpg",
-      "duration": 270,
-      "seller_id": 2
     },
     {
       "id": "7",
@@ -366,11 +336,11 @@
     },
     {
       "id": "4774",
-      "productId": "5"
+      "productId": null
     },
     {
       "id": "e400",
-      "productId": "3"
+      "productId": null
     },
     {
       "id": "9c1d",
@@ -378,7 +348,7 @@
     },
     {
       "id": "1e57",
-      "productId": "5"
+      "productId": null
     },
     {
       "id": "f739",
@@ -386,7 +356,7 @@
     },
     {
       "id": "beea",
-      "productId": "3"
+      "productId": null
     },
     {
       "id": "bf5a",
@@ -398,7 +368,7 @@
     },
     {
       "id": "97b6",
-      "productId": "3"
+      "productId": null
     },
     {
       "id": "9dae",

@@ -1,0 +1,75 @@
+.delete-products {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .delete-products-content {
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .delete-products-content p {
+    margin-bottom: 10px;
+  }
+  
+  .delete-products-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .p-card {
+    margin: 20px;
+    padding: 20px;
+    width: 250px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .p-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+  }
+  
+  .p-price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #666;
+  }
+  
+  .p-price span:first-child {
+    color: Gold;
+  }
+  
+  .primaryText {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .secondaryText {
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .delete-product-btn {
+    background-color: #ff69b4;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .delete-product-btn:hover {
+    background-color: #ff99cc;
+  }
+  
+  

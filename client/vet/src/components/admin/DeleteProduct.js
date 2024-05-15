@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
+import './DeleteProduct.css';
 
 
 
-
-function AProducts() {
+function DeltProducts() {
     const [products, setProducts] = useState([]);
     
     useEffect(() => {
@@ -39,18 +39,18 @@ function AProducts() {
     };
 
     return (
-        <div className='products'>
+        <div className='delete-products'>
             
-            <div className="products-content">
-                <p>Showing all {products.length} results</p>
+            <div className="delete-products-content">
+                <p>Showing all {products.length} Products results</p>
                 
             </div>
-            <div className="products-container">
+            <div className="delete-products-container">
                 {products.map((product) => (
                     <div className="flexColStart p-card" key={product.id}>
                         <img src={product.image_url} alt="category"/>
                         <span className="secondaryText p-price">
-                            <span style={{color:"orange"}}>$</span>
+                            <span style={{color:"Gold"}}>kes</span>
                             <span>{product.price}</span>
                         </span>
                         <span className='primaryText'>{product.name}</span>
@@ -64,4 +64,4 @@ function AProducts() {
     )
 }
 
-export default AProducts;
+export default DeltProducts;

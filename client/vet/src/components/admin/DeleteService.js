@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
+import './DeleteService.css';
 
 
 
-
-function AService() {
+function DeltService() {
     const [services, setServices] = useState([]);
 
     
@@ -44,7 +44,7 @@ function AService() {
         <div className='services-delete'>
             
             <div className="services-content">
-                <p>Showing all {services.length} results</p>
+                <p>DISPLAYING all {services.length} Available SERVICES </p>
                 
             </div>
             <div className="services-container">
@@ -52,7 +52,7 @@ function AService() {
                     <div className="flexColStart p-card" key={service.id}>
                         <img src={service.image_url} alt="category"/>
                         <span className="secondaryText p-price">
-                            <span style={{color:"orange"}}>$</span>
+                            <span style={{color:"gold"}}>kes</span>
                             <span>{service.price}</span>
                         </span>
                         <span className='primaryText'>{service.name}</span>
@@ -66,4 +66,4 @@ function AService() {
     )
 }
 
-export default AService;
+export default DeltService;
