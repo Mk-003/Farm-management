@@ -4,6 +4,7 @@ function  ClientHome(){
     return(
         <>
         <ClientNavbar />
+        
         </>
     )
 }

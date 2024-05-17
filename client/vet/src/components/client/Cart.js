@@ -1,43 +1,35 @@
-import React, { useState } from 'react';
-import './Cart.css';
+// Cart.js
+import React from 'react';
 
 
 
 
 
+const Cart = ({ cartItems, onRemoveFromCart }) => {
+  const totalItems = cartItems.length;
 
-const Cart = () => {
-  const [cart, setCart] = useState([]);
 
-  
-
-  // Function to remove product from cart
-  const removeFromCart = (productId) => {
-    setCart(cart.filter((product) => product.id !== productId));
-  };
-
-  // Function to calculate total price of items in cart
-  const calculateTotalPrice = () => {
-    return cart.reduce((total, product) => total + product.price, 0);
-  };
 
   return (
-    <div>
-      <h2>Shopping Cart</h2>
-      <div className='cart-component'>
-        {cart.map((product) => (
-          <div key={product.id}>
-            <h3>{product.name}</h3>
-            <p>Price: ${product.price}</p>
-            <button className='remove-btn' onClick={() => removeFromCart(product.id)}>Remove</button>
-          </div>
-        ))}
-      </div>
-      <div>
-        <h4>Total: kes{calculateTotalPrice()}</h4>
-      </div>
+    <div className="cart">
+      <h2>Cart</h2>
+      <p>Total Items: {totalItems}</p>
+      {cartItems.length === 0 ? (
+        <p>No items in the cart</p>
+      ) : (
+        <ul>
+          {cartItems.map((item) => (
+            <li key={item.id}>
+              <h4>{item.name}</h4>
+              <p>Price: ${item.price}</p>
+              <button onClick={() => onRemoveFromCart(item)}>Remove</button>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
 
 export default Cart;
+

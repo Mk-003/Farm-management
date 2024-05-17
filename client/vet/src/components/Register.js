@@ -8,6 +8,7 @@ function Register() {
     const [user, setUser] = useState({
         username: "",
         email: "",
+        phoneNumber: "",
         password: "",
         confirmPassword: "",
         role: "client"
@@ -23,15 +24,22 @@ function Register() {
     const postData = async(e) => {
         e.preventDefault();
 
-        const { username, email, password, role } = user;
+        const { username, email, phoneNumber, password,confirmPassword, role } = user;
 
-        const res = await fetch('http://127.0.0.1:5555/userRegister', {
+        if (password !== confirmPassword) {
+            window.alert('Passwords do not match');
+            return;
+        }
+    
+        try {
+
+        const res = await fetch('/userRegister', {
             method: 'POST',
             headers : {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                username, email, password, role
+                username, email,phoneNumber, password, role
             })
         });
 
@@ -40,11 +48,15 @@ function Register() {
 
         if (res.status === 201){
             localStorage.setItem('access_token', data.access_token);
-            //window.alert('Registration successful');
+            window.alert('Registration successful');
             navigate('/login');
         } else {
             window.alert('Registration failed');
         }
+    } catch (error) {
+        console.error('Error:', error);
+        window.alert('An error occurred. Please try again.');
+    }
     };
 
     return (
@@ -64,6 +76,18 @@ function Register() {
                         <label htmlFor="email">Email</label>
                         <input type="email" className="form-control" id="email" name="email" placeholder="Enter Email" value={user.email} onChange={handleInputs} />
                     </div>
+                    <div className="form-group">
+              <label htmlFor="phoneNumber">Phone Number</label>
+              <input
+                type="text"
+                className="form-control"
+                id="phoneNumber"
+                name="phoneNumber"
+                placeholder="Enter Phone Number"
+                value={user.phoneNumber}
+                onChange={handleInputs}
+              />
+            </div>
                     
                     <div className="form-group">
                         <label htmlFor="password">Password</label>

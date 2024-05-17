@@ -1,18 +1,22 @@
 
 
 
-import React, { useState } from 'react';
+
 
 import './PostProducts.css';
 
-function ProductPost(){
 
+
+
+import React, { useState } from 'react';
+
+function ProductTextualForm({ onSubmit }) {
     const [formData, setFormData] = useState({
+        pet: '',
         name: '',
         description: '',
         price: '',
-        image: null, // New state for the uploaded image
-        quantity_available: '',
+        quantity_available: ''
     });
 
     const handleChange = (e) => {
@@ -23,74 +27,91 @@ function ProductPost(){
         }));
     };
 
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        setFormData(prevData => ({
-            ...prevData,
-            image: file
-        }));
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const formDataWithImage = new FormData();
-            formDataWithImage.append('name', formData.name);
-            formDataWithImage.append('description', formData.description);
-            formDataWithImage.append('price', formData.price);
-            formDataWithImage.append('quantity_available', formData.quantity_available);
-            formDataWithImage.append('image', formData.image);
-
-            const response = await fetch('/adminproducts', {
+            const response = await fetch('/products/textual', {
                 method: 'POST',
-                body: formDataWithImage,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
             });
             if (!response.ok) {
                 throw new Error('Failed to create product');
             }
-            // Optionally, you can reset the form fields here
-            setFormData({
-                name: '',
-                description: '',
-                price: '',
-                image: null,
-                quantity_available: ''
-            });
+            const data = await response.json();
+            onSubmit(data.id);
         } catch (error) {
             console.error('Error creating product:', error);
         }
     };
 
-    return(
-        <div className="post-products">
-            <div className="post-products-form">
-                <span>Add A Product</span>
-                <form onSubmit={handleSubmit}>
-                    <div>
-                        <label htmlFor="name">Product Name</label>
-                        <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Name" required />
-                    </div>
-                    <div>
-                        <label htmlFor="description">Description</label>
-                        <textarea name="description" value={formData.description} onChange={handleChange} placeholder="Description" required />
-                    </div>
-                    <div>
-                        <label htmlFor="price">Price</label>
-                        <input type="number" name="price" value={formData.price} onChange={handleChange} placeholder="Price" required />
-                    </div>
-                    <div>
-                        <label htmlFor="quantity_available">Quantity</label>
-                        <input type="number" name="quantity_available" value={formData.quantity_available} onChange={handleChange} placeholder="Quantity Available" required />
-                    </div>
-                    <div>
-                        <label htmlFor="image">Image</label>
-                        <input type="file" name="image" onChange={handleImageChange} accept="image/*" />
-                    </div>
-                    <button type="submit">Add Product</button>
-                </form>
-            </div>
+    return (
+        <form onSubmit={handleSubmit}>
+            <input type="text" name="pet" value={formData.pet} onChange={handleChange} placeholder="Pet" />
+            <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Name" />
+            <textarea name="description" value={formData.description} onChange={handleChange} placeholder="Description" />
+            <input type="number" name="price" value={formData.price} onChange={handleChange} placeholder="Price" />
+            <input type="number" name="quantity_available" value={formData.quantity_available} onChange={handleChange} placeholder="Quantity Available" />
+            <button type="submit">Create Product</button>
+        </form>
+    );
+}
+
+function ProductImageForm({ productId }) {
+    const [images, setImages] = useState([]);
+
+    const handleImageChange = (e) => {
+        setImages(Array.from(e.target.files));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const formData = new FormData();
+            formData.append('product_id', productId);
+            images.forEach((image) => {
+                formData.append('images', image);
+            });
+            const response = await fetch('/products/images', {
+                method: 'POST',
+                body: formData
+            });
+            if (!response.ok) {
+                throw new Error('Failed to upload images');
+            }
+            console.log('Images uploaded successfully');
+        } catch (error) {
+            console.error('Error uploading images:', error);
+        }
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            <input type="file" name="images" onChange={handleImageChange} accept="image/*" multiple />
+            <button type="submit">Upload Images</button>
+        </form>
+    );
+}
+
+function ProductCreationPage() {
+    const [productId, setProductId] = useState(null);
+
+    const handleProductCreated = (id) => {
+        setProductId(id);
+    };
+
+    return (
+        <div>
+            <h1>Create Product</h1>
+            {!productId ? (
+                <ProductTextualForm onSubmit={handleProductCreated} />
+            ) : (
+                <ProductImageForm productId={productId} />
+            )}
         </div>
     );
 }
 
-export default ProductPost;
+export default ProductCreationPage;

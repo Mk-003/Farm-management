@@ -2,7 +2,7 @@
 import './App.css';
 import {BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-import Navbar from './components/client/NavBar';
+import Navbar from './components/client/NavBar'
 import Home from './components/Home';
 import Login from './components/Login';
 import Register from './components/Register';
@@ -25,6 +25,8 @@ function App() {
     <Router>
     <Navbar />
       <Routes>
+        
+        
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
@@ -33,26 +35,22 @@ function App() {
       </Routes>
 
       <Routes>
-  
-  <Route path='/productPost' element={<ProductPost />} />
-  <Route path='/ServicePost' element={<ServicePost />} />
-  <Route path='/deleteProduct' element={<DeleteProduct />} />
-  <Route path='/deleteService' element={<DeleteService />} />
-  <Route path='/history' element={<History />} />
-  <Route path='/patchProduct' element={<PatchProduct />} />
-  <Route path='/patchService' element={<PatchService />} />
-</Routes>
-    <Navbar2 />
-      </Router>
+      <Route path='/productPost' element={<ProductPost />} />
+      <Route path='/ServicePost' element={<ServicePost />} />
+      <Route path='/deleteProduct' element={<DeleteProduct />} />
+      <Route path='/deleteService' element={<DeleteService />} />
+      <Route path='/history' element={<History />} />
+      <Route path='/patchProduct' element={<PatchProduct />} />
+      <Route path='/patchService' element={<PatchService />} />
+      
+      </Routes>
+      <Navbar2 />
+    </Router>
     </div>
   );
 }
 
 export default App;
-
-
-
-
 
 
 
