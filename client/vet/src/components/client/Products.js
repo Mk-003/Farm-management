@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Cart from './Cart';
+import './Product.css';
+
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -34,9 +35,9 @@ const Products = () => {
     console.log('Added to cart:', product);
   };
 
-  const handleRemoveFromCart = (product) => {
-    setCartItems(cartItems.filter((item) => item.id !== product.id));
-  };
+  // const handleRemoveFromCart = (product) => {
+  //   setCartItems(cartItems.filter((item) => item.id !== product.id));
+  // };
 
   const handleSort = (event) => {
     const option = event.target.value;
@@ -93,7 +94,7 @@ const Products = () => {
           </div>
         ))}
       </div>
-      <Cart cartItems={cartItems} onRemoveFromCart={handleRemoveFromCart} />
+      {/* <Cart cartItems={cartItems} onRemoveFromCart={handleRemoveFromCart} /> */}
     </div>
   );
 };

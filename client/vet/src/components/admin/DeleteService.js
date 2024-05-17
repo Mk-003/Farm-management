@@ -49,14 +49,14 @@ function DeleteService() {
             </div>
             <div className="services-container">
                 {services.map((service) => (
-                    <div className="flexColStart p-card" key={service.id}>
+                    <div className="flexColStart s-card" key={service.id}>
                         <img src={service.image_url} alt="category"/>
-                        <span className="secondaryText p-price">
+                        <span className="secondaryText s-price">
                             <span style={{color:"gold"}}>kes</span>
                             <span>{service.price}</span>
                         </span>
                         <span className='primaryText'>{service.name}</span>
-                        <span className='secondaryText'>{service.description}</span>
+                        {/* <span className='secondaryText'>{service.description}</span> */}
                         
                         <button className="delete-service-btn" onClick={() => handleDelete(service.id)}>Delete</button>
                     </div>

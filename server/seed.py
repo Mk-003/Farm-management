@@ -24,7 +24,7 @@ def seed_data():
         pet='Cat',
         price=799,
         description='Advanced Cat Galaxy S20, 128GB memory, Cosmic Gray, perfect for tracking feline activities',
-        image_url='https://i.pinimg.com/564x/e8/b2/7d/e8b27df6b3f8f76c569c1715297672d2.jpg',
+        image_url='https://www.googleadservices.com/pagead/aclk?sa=L&ai=DChcSEwj54eCctZSGAxVUo4MHHStzIT4YABAMGgJlZg&ase=2&gclid=EAIaIQobChMI-eHgnLWUhgMVVKODBx0rcyE-EAQYAyABEgLoM_D_BwE&ohost=www.google.com&cid=CAASJuRo0H9tgaPMV4iEqge4VeCUfgvUHu_8IgQjBQqKiB6SnF_FY-Vk&sig=AOD64_1WTU7rVrAnS-i3MGFRWF9Cp_FibQ&ctype=5&q=&nis=4&ved=2ahUKEwjN8tqctZSGAxXNh_0HHTCjCFEQwg8oAXoECAUQHQ&adurl=',
         quantity_available=80,
         seller_id=seller_id
         )

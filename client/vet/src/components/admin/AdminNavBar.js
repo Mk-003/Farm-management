@@ -10,7 +10,7 @@ function Navbar2() {
             <Link to="/productPost" className="nav-link">Product Post</Link>
           </li>
           <li className="nav-item">
-            <Link to="/adminServicePost" className="nav-link">Admin Service Post</Link>
+            <Link to="/ServicePost" className="nav-link">Service Post</Link>
           </li>
           <li className="nav-item">
             <Link to="/deleteProduct" className="nav-link">Delete Product</Link>

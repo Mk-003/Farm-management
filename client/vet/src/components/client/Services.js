@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import './Services.css';
+
 
 const Services = () => {
   const [services, setServices] = useState([]);
   const [selectedService, setSelectedService] = useState(null);
-  const [sortOption, setSortOption] = useState('Default');
+  const [displayOption, setDisplayOption] = useState('Default');
 
   useEffect(() => {
     // Fetch services from the backend
@@ -27,14 +29,14 @@ const Services = () => {
     setSelectedService(service);
   };
 
-  const handleAddToCart = (service) => {
+  const handleAddToBook = (service) => {
     // Implement add to cart functionality for services
     console.log('Added to cart:', service);
   };
 
-  const handleSort = (event) => {
+  const handleDisplay = (event) => {
     const option = event.target.value;
-    setSortOption(option);
+    setDisplayOption(option);
     let sortedServices = [...services];
 
     switch (option) {
@@ -57,16 +59,16 @@ const Services = () => {
 
   return (
     <div>
-      <div className="flexColStart p-head">
+      <div className="flexColStart s-head">
         <span className='orangeText'>Best Choices</span>
         <span className='primaryText'>Popular Categories</span>
       </div>
-      <h2>SERVICES</h2>
-      <select value={sortOption} onChange={handleSort}>
-        <option value="Default">Default Sorting</option>
-        <option value="Title">Sort By Name</option>
-        <option value="Price-low">Sort By Price: low to high</option>
-        <option value="Price-high">Sort By Price: high to low</option>
+     <h2>DISPLAY BY</h2>
+      <select value={displayOption} onChange={handleDisplay}>
+        <option value="Default">Default Display</option>
+        <option value="Title">Display By Name</option>
+        <option value="Price-low">Display By Price: low to high</option>
+        <option value="Price-high">Display By Price: high to low</option>
       </select>
       <div className="services-container">
         {services.map((service) => (
@@ -80,7 +82,7 @@ const Services = () => {
             {selectedService && selectedService.id === service.id && (
               <div>
                 <p>{service.description}</p>
-                <button onClick={() => handleAddToCart(service)}>Add to Cart</button>
+                <button className='service-button' onClick={() => handleAddToBook(service)}>BOOK</button>
               </div>
             )}
           </div>

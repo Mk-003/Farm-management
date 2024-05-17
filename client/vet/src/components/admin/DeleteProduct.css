@@ -3,13 +3,16 @@
     margin: 40px auto;
     padding: 20px;
     background-color: #f9f9f9;
-    border: 1px solid #ddd;
+    border: 1px solid #15b5c0;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 30px;
+    
   }
   
   .delete-products-content {
     padding: 20px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #e41b1b;
+    border-radius: 25px;
   }
   
   .delete-products-content p {
@@ -20,6 +23,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    
   }
   
   .p-card {
@@ -29,6 +33,7 @@
     background-color: #fff;
     border: 1px solid #ddd;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 30px;
   }
   
   .p-card img {
@@ -56,20 +61,25 @@
   
   .secondaryText {
     font-size: 14px;
-    color: #666;
+    color: hsl(224, 92%, 43%);
   }
   
   .delete-product-btn {
-    background-color: #ff69b4;
+    background-color: rgb(223, 12, 12);
+    position: relative;
     color: #fff;
-    border: none;
+    border-radius: 25px;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
+    transition: .3s
   }
   
   .delete-product-btn:hover {
     background-color: #ff99cc;
   }
   
-  
+  .p-font{
+    font-weight: 600;
+    
+  }

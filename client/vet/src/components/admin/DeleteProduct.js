@@ -42,12 +42,12 @@ function DeleteProduct() {
         <div className='delete-products'>
             
             <div className="delete-products-content">
-                <p>Showing all {products.length} Products results</p>
+                <p className="p-font">Showing all {products.length} Products results</p>
                 
             </div>
             <div className="delete-products-container">
                 {products.map((product) => (
-                    <div className="flexColStart p-card" key={product.id}>
+                    <div className="flexColStart s-card" key={product.id}>
                         <img src={product.image_url} alt="category"/>
                         <span className="secondaryText p-price">
                             <span style={{color:"Gold"}}>kes</span>

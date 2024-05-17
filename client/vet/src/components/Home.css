@@ -1,0 +1,172 @@
+.home-container {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    }
+    
+    hr{
+    width: 80px;
+    margin: 0px auto;
+    margin-top: 5px;
+    border: 0.5px solid #a86e3b;
+    }
+    
+    /* Header */
+    .home-header {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    }
+    
+    
+    .home-header-text {
+    position: absolute;
+    top: 30%;
+    left: 5%;
+    width: 40%;
+    }
+    
+    .home-header-text h4 {
+    text-transform: uppercase;
+    font-weight: normal;
+    }
+    
+    .home-header-text h1 {
+    font-size: 70px;
+    text-transform: uppercase;
+    font-weight: normal;
+    }
+    
+    .home-header-text p {
+    color: #222121;
+    margin-top: 10px;
+    line-height: 1.5rem;
+    font-family: "Roboto", sans-serif;
+    max-width: 90%;
+    }
+    
+    /* Middle Section */
+    .home-mid-text {
+    text-align: center;
+    margin-top: 100px;
+    margin-bottom: 50px;
+    }
+    
+    .home-mid-text h4 {
+    color: #4c4c4c;
+    }
+    
+    .home-mid-text h2 {
+    font-weight: normal;
+    font-size: 50px;
+    }
+    
+    .home-mid-images {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    }
+    
+    .home-mid-content img {
+    height: 380px;
+    width: 300px;
+    transition: transform 0.3s ease; 
+    }
+    
+    .home-mid-content img:hover {
+    transform: scale(1.1); 
+    }
+    
+    .home-mid-content h3 {
+    margin-top: 10px;
+    font-weight: normal;
+    text-align: center;
+    width: 300px; 
+    }
+    
+    .home-mid-content p {
+    font-weight: normal;
+    text-align: center;
+    }
+    
+    /* Lower Section */
+    .home-lower {
+    display: flex;
+    justify-content: space-between;
+    /*align-items: center;*/
+    margin: 100px 0;
+    }
+    
+    .home-lower-text {
+    max-width: 300px;
+    margin: 200px 0;
+    margin-left: 90px;
+    /* font-family: "Cinzel", serif;*/
+    
+    }
+    
+    .home-lower-text h4, h2{
+    font-family: "Cinzel", serif;
+    font-weight: normal;
+    text-transform: uppercase;
+    }
+    
+    .home-lower-text h2{
+    font-size: 50px;
+    }
+    
+    .home-lower-text p {
+    font-size: 17px;
+    color: #4c4c4c;
+    line-height: 2.0;
+    font-family: "Roboto", sans-serif;
+    }
+    
+    .home-lower-right {
+    position: relative;
+    margin-right: 90px;
+    }
+    
+    .home-lower-right img{
+    height: 700px;
+    width: 550px;
+    }
+    
+    /* Why Choose Us Section */
+    .why-choose-us-container {
+    text-align: center;
+    margin: 0 auto;
+    max-width: 700px;
+    align-items: center;
+    justify-content: center;
+    }
+    
+    .why-choose-us-container h4{
+    font-weight: normal;
+    text-transform: uppercase;
+    }
+    
+    .why-choose-us-container h2{
+    font-size: 50px;
+    text-transform: uppercase;
+    font-weight: normal;
+    
+    }
+    
+    .why-choose-us-container p {
+    font-size: 20px;
+    color: #4c4c4c;
+    line-height: 1.6;
+    }
+    
+    .why-choose-us-container hr{
+    margin-top: 20px;
+    border-color: #a86e3b;
+    }
+    
+    
+    
+    
+    
+    

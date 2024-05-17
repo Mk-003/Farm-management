@@ -1,0 +1,60 @@
+\/* Navbar Styles */
+.navbar {
+    background-color: #fff; /* Navbar background color */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Navbar box shadow */
+}
+
+.navbar-brand {
+    font-weight: bold; /* Navbar brand font weight */
+    color: #333; /* Navbar brand color */
+    padding: 10px;
+}
+
+.navbar-nav {
+    display: flex; /* Ensure the navbar items are displayed as flex */
+    align-items: center; /* Align items vertically */
+}
+
+.navbar-nav .nav-item {
+    margin-right: 10px; /* Spacing between navbar items */
+}
+
+.navbar-nav .nav-link {
+    color: #333; /* Navbar link color */
+    font-weight: bold; /* Navbar link font weight */
+}
+
+.navbar-nav .nav-link:hover {
+    color: #007bff; /* Navbar link hover color */
+}
+.navbar-collapse{
+  margin-left: 120px;
+}
+
+.navbar-collapse form {
+    margin-left: auto; /* Push search form to the right */
+    margin-right: 100px;
+    margin-top: 20px;
+    display: flex; /* Display form items as flex */
+    
+}
+
+.navbar-collapse input[type="search"] {
+    margin-right: 5px; /* Spacing between search input and button */
+    width: 600px;
+}
+
+.navbar-collapse button[type="submit"] {
+    background-color: black; /* Search button background color */
+    border-color: black; /* Search button border color */
+    color: #fff; /* Search button text color */
+    font-weight: bold; /* Search button text font weight */
+    width: 100px;
+    height: 43px;
+    padding: 1px 1px; /* Adjust padding to make the button smaller */
+}
+
+.navbar-collapse button[type="submit"]:hover {
+    background-color: #217388; /* Search button background color on hover */
+    border-color: #217888; /* Search button border color on hover */
+}
