@@ -72,17 +72,18 @@ const Products = () => {
       <select value={sortOption} onChange={handleSort}>
         <option value="Default">Default Sorting</option>
         <option value="Title">Sort By Name</option>
-        <option value="Price-low">Sort By Price: low to high</option>
-        <option value="Price-high">Sort By Price: high to low</option>
+        <option value="Price-low">By Price: low to high</option>
+        <option value="Price-high"> By Price: high to low</option>
       </select>
       <div className="product-grid">
         {products.map((product) => (
           <div key={product.id}>
             <div onClick={() => handleProductClick(product)}>
+            <img src={product.image_url} alt={product.name} />
               <h3>{product.name}</h3>
               <p>{product.description}</p>
               <p>Price: ${product.price}</p>
-              <img src={product.image_url} alt={product.name} />
+              
             </div>
             {selectedProduct && selectedProduct.id === product.id && (
               <div>

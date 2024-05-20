@@ -8,6 +8,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Products from './components/client/Products';
 import Services from './components/client/Services';
+import Items from './components/client/Items';
 import Navbar2 from './components/admin/AdminNavBar';
 
 import ProductPost from './components/admin/ProductPost';
@@ -19,19 +20,19 @@ import PatchService from './components/admin/PatchService';
 import History from './components/admin/History';
 
 
+
 function App() {
   return (
     <div>
     <Router>
     <Navbar />
       <Routes>
-        
-        
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
         <Route path='/products' element={<Products />} />
         <Route path='/services' element={<Services />} />
+        <Route path='/items' element={<Items />} />
       </Routes>
 
       <Routes>

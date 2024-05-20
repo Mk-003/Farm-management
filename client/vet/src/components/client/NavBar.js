@@ -54,6 +54,11 @@ const Navbar = () => {
                                 SERVICES
                             </NavLink>
                         </li>
+                        <li>   
+                            <NavLink className="nav-link" to="/items">
+                                ITEMS
+                            </NavLink>
+                        </li>
                        
 
                     </ul>

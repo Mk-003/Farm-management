@@ -74,10 +74,12 @@ const Services = () => {
         {services.map((service) => (
           <div key={service.id}>
             <div onClick={() => handleServiceClick(service)}>
+            <img src={service.image_url} alt={service.name} />
               <h3>{service.name}</h3>
-              <p>{service.description}</p>
               <p>Price: ${service.price}</p>
-              <img src={service.image_url} alt={service.name} />
+              <p>{service.description}</p>
+              
+              
             </div>
             {selectedService && selectedService.id === service.id && (
               <div>

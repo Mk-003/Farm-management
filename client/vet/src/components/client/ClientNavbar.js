@@ -19,6 +19,7 @@ function ClientNavbar() {
                 </NavLink>
                 <div className="h-menu">
                     <NavLink className="component-nav-link" to='/component/products'>Products</NavLink>
+                    <Navlink className='component-nav-link' to='/component/itemslists'>ItemsList</Navlink>
                     <NavLink className="component-nav-link" to="/ccomponent/order">Orders</NavLink>
                     <NavLink className="component-nav-link" to="/component/cart">
                         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" className="bi bi-handbag-fill" viewBox="0 0 16 16">
