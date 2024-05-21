@@ -67,18 +67,6 @@ class Product(db.Model, SerializerMixin):
     quantity_available = db.Column(db.Integer, nullable=False)
     type = db.Column(db.String, nullable=False)
 
-    # def to_dict(self):
-    #     return {
-    #         'id': self.id,
-    #         'pet': self.pet,
-    #         'name': self.name,
-    #         'description': self.description,
-    #         'price': self.price,
-    #         'image_url': self.image_url,
-    #         'quantity_available': self.quantity_available,
-    #         'type': self.type
-    #     }
-
     # Added seller_id to the Product model to establish a relationship with the Admin model, representing the seller of the product.
     seller_id = db.Column(db.Integer, db.ForeignKey('admins.id')) 
 

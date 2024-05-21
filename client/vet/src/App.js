@@ -8,7 +8,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Products from './components/client/Products';
 import Services from './components/client/Services';
-import Items from './components/client/Items';
+
 import Navbar2 from './components/admin/AdminNavBar';
 
 import ProductPost from './components/admin/ProductPost';
@@ -34,7 +34,7 @@ function App() {
         <Route path='/products' element={<Products />} />
         <Route path='/products/:id' component={ProductDetail} />
         <Route path='/services' element={<Services />} />
-        <Route path='/items' element={<Items />} />
+        
       </Routes>
 
       <Routes>

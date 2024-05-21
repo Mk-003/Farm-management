@@ -1,8 +1,8 @@
-"""cd
+"""latest backend
 
-Revision ID: 91bc750d75df
+Revision ID: 9d6a8514e1a0
 Revises: 
-Create Date: 2024-05-21 09:34:52.641041
+Create Date: 2024-05-21 14:53:19.464065
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '91bc750d75df'
+revision = '9d6a8514e1a0'
 down_revision = None
 branch_labels = None
 depends_on = None

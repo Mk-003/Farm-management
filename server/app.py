@@ -236,8 +236,7 @@ def get_and_update_admin_info_by_id(id):
             return jsonify({'error': f'Failed to update item: {str(e)}'}), 500
 
 # Client side
-#added a tag 'POST'
-@app.route('/userproducts', methods=['GET', 'POST'])
+@app.route('/userproducts', methods=['GET'])
 def get_user_products():
     if request.method == 'GET':
         name = request.args.get('name')
@@ -249,15 +248,9 @@ def get_user_products():
             products = Product.query.all()
 
         return jsonify([product.to_dict() for product in products]), 200
-    
-    
 
-
-
-
-
-@app.route('/userproducts/<int:id>', methods=['GET', 'PATCH', 'DELETE'])
-def get_patch_delete_product_by_id(id):
+@app.route('/userproducts/<int:id>', methods=['GET'])
+def get_products_by_id(id):
     session = db.session()
     product = session.get(Product, id)
 
@@ -265,47 +258,6 @@ def get_patch_delete_product_by_id(id):
         if not product:
             return jsonify({'error': 'Product not found'}), 404
         return jsonify(product.to_dict()), 200
-
-    if request.method == 'PATCH':
-        if not product:
-            return jsonify({'error': 'Product not found'}), 404
-
-        data = request.json
-        # Update product fields if they exist in the request
-        if 'pet' in data:
-            product.pet = data['pet']
-        if 'name' in data:
-            product.name = data['name']
-        if 'description' in data:
-            product.description = data['description']
-        if 'price' in data:
-            product.price = data['price']
-        if 'image_url' in data:
-            product.image_url = data['image_url']
-        if 'quantity_available' in data:
-            product.quantity_available = data['quantity_available']
-        if 'type' in data:
-            product.type = data['type']
-
-        try:
-            session.commit()
-            return jsonify(product.to_dict()), 200
-        except Exception as e:
-            session.rollback()
-            return jsonify({'error': f'Failed to update product: {str(e)}'}), 500
-
-    if request.method == 'DELETE':
-        if not product:
-            return jsonify({'error': 'Product not found'}), 404
-
-        try:
-            session.delete(product)
-            session.commit()
-            return jsonify({'message': 'Product deleted successfully'}), 200
-        except Exception as e:
-            session.rollback()
-            return jsonify({'error': f'Failed to delete product: {str(e)}'}), 500
-
     
 class ProductOrders(Resource):
     @jwt_required()
@@ -573,11 +525,10 @@ api.add_resource(UserShippingDetails, '/userShippingAddress')
 # Admin Side
 @app.route('/adminproducts', methods=['GET','POST'])
 def get_post_update_and_delete_products():
-    
+    products = Product.query.all()
 
     if request.method == 'GET':
-        products = Product.query.all()
-        return jsonify([product.to_dict() for product in products]), 200
+        return jsonify([product.to_dict for product in products]), 200
     
     if request.method == 'POST':
         data = request.json
