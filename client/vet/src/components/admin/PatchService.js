@@ -1,200 +1,134 @@
-// import React, { useState, useEffect } from 'react';
-
-// const UpdateService = () => {
-//   const [services, setServices] = useState([]);
-//   const [selectedService, setSelectedService] = useState(null);
-//   const [updatedService, setUpdatedService] = useState({
-//     name: '',
-//     description: '',
-//     price: 0,
-//     quantity: 0,
-//     image_url: '',
-//     image: null
-//   });
-
-//   useEffect(() => {
-//     // Fetch services from the backend
-//     const fetchServices = async () => {
-//       try {
-//         const response = await fetch('http://localhost:3000/services');
-//         if (response.ok) {
-//           const data = await response.json();
-//           setServices(data);
-//         } else {
-//           console.error('Failed to fetch services');
-//         }
-//       } catch (error) {
-//         console.error('Error:', error);
-//       }
-//     };
-//     fetchServices();
-//   }, []);
-
-//   const handleServiceSelect = (service) => {
-//     setSelectedService(service);
-//     setUpdatedService({
-//       name: service.name,
-//       description: service.description,
-//       price: service.price,
-//       quantity: service.quantity,
-//       image_url: service.image_url,
-//       image: null
-//     });
-//   };
-
-//   const handleUpdateService = async () => {
-//     try {
-//       const response = await fetch(`http://localhost:3000/services/${selectedService.id}`, {
-//         method: 'PATCH',
-//         headers: {
-//           'Content-Type': 'application/json',
-//         },
-//         body: JSON.stringify(updatedService),
-//       });
-//       if (response.ok) {
-//         // Show success message
-//       } else {
-//         // Handle error (e.g., show error message)
-//       }
-//     } catch (error) {
-//       console.error('Error:', error);
-//     }
-//   };
-
-//   return (
-//     <div className='update-services'>
-//       <h2>Update Service</h2>
-//       <select onChange={(e) => handleServiceSelect(JSON.parse(e.target.value))}>
-//         <option>Select a service</option>
-//         {services.map((service) => (
-//           <option key={service.id} value={JSON.stringify(service)}>
-//             {service.name}
-//           </option>
-//         ))}
-//       </select>
-//       {selectedService && (
-//         <div>
-//           <input type="text" value={updatedService.name} onChange={(e) => setUpdatedService({ ...updatedService, name: e.target.value })} placeholder="Name" required  />
-//           <input type="text" value={updatedService.description} onChange={(e) => setUpdatedService({ ...updatedService, description: e.target.value })} placeholder="Description" required  />
-//           <input type="number" value={updatedService.price} onChange={(e) => setUpdatedService({ ...updatedService, price: parseFloat(e.target.value) })} placeholder="Price" required  />
-//           <input type="number" value={updatedService.quantity} onChange={(e) => setUpdatedService({ ...updatedService, quantity: parseInt(e.target.value) })} placeholder="Quantity" required  />
-//           <input type="text" value={updatedService.image_url} onChange={(e) => setUpdatedService({ ...updatedService, image_url: e.target.value })} placeholder="url" required  />
-//           <input type="file" onChange={handleImageChange} accept="image/*" placeholder="Image" required />
-//           <button className='update-service-button' onClick={handleUpdateService}>Update Service</button>
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default UpdateService;
-
-
-
-
-// const handleImageChange = (event) => {
-//   const file = event.target.files[0];
-//   setUpdatedService({ ...updatedService, image: file });
-// };
-
-
 import React, { useState, useEffect } from 'react';
 
 import './PatchServices.css';
 
-const PatchService = () => {
-  const [services, setServices] = useState([]);
-  const [selectedService, setSelectedService] = useState(null);
-  const [updatedService, setUpdatedService] = useState({
-    name: '',
-    description: '',
-    price: 0,
-    quantity: 0,
-    image_url: '',
-    image: null // New state for the uploaded image
-  });
-
-  useEffect(() => {
-    // Fetch services from the backend
-    const fetchServices = async () => {
-      try {
-        const response = await fetch('/adminservices');
-        if (response.ok) {
-          const data = await response.json();
-          setServices(data);
-        } else {
-          console.error('Failed to fetch services');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
-    fetchServices();
-  }, []);
-
-  const handleServiceSelect = (service) => {
-    setSelectedService(service);
-    setUpdatedService({
-      name: service.name,
-      description: service.description,
-      price: service.price,
-      quantity: service.quantity,
-      image_url: service.image_url,
-      image: null // Reset the image when selecting a new service
+const PatchProduct = () => {
+    const [products, setProducts] = useState([]);
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [updatedProduct, setUpdatedProduct] = useState({
+        pet: '',
+        name: '',
+        description: '',
+        price: '',
+        image_url: '',
+        quantity_available: '',
+        type: ''
     });
-  };
 
-  const handleUpdateService = async () => {
-    try {
-      const formData = new FormData();
-      formData.append('name', updatedService.name);
-      formData.append('description', updatedService.description);
-      formData.append('price', updatedService.price);
-      formData.append('quantity', updatedService.quantity);
-      formData.append('image', updatedService.image); // Append the image to the form data
+    useEffect(() => {
+        // Fetch products from the backend
+        const fetchProducts = async () => {
+            try {
+                const response = await fetch('/userproducts');
+                if (response.ok) {
+                    const data = await response.json();
+                    const filteredServices = data.filter(item => item.type === 'service');
+                    setProducts(filteredServices);
+                } else {
+                    console.error('Failed to fetch products');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
+        fetchProducts();
+    }, []);
 
-      const response = await fetch(`/adminservices/${selectedService.id}`, {
-        method: 'PATCH',
-        body: formData
-      });
-      if (response.ok) {
-        // Show success message
-      } else {
-        // Handle error (e.g., show error message)
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
+    const handleProductSelect = (product) => {
+        setSelectedProduct(product);
+        setUpdatedProduct({
+            pet: product.pet,
+            name: product.name,
+            description: product.description,
+            price: product.price,
+            image_url: product.image_url,
+            quantity_available: product.quantity_available,
+            type: product.type
+        });
+    };
 
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    setUpdatedService({ ...updatedService, image: file });
-  };
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setUpdatedProduct({ ...updatedProduct, [name]: value });
+    };
 
-  return (
-    <div className='update-services'>
-      <h2>Update Service</h2>
-      <select onChange={(e) => handleServiceSelect(JSON.parse(e.target.value))}>
-        <option>Select a service</option>
-        {services.map((service) => (
-          <option key={service.id} value={JSON.stringify(service)}>
-            {service.name}
-          </option>
-        ))}
-      </select>
-      {selectedService && (
-        <div>
-          <input type="text" value={updatedService.name} onChange={(e) => setUpdatedService({ ...updatedService, name: e.target.value })} placeholder="Name" required  />
-          <input type="text" value={updatedService.description} onChange={(e) => setUpdatedService({ ...updatedService, description: e.target.value })} placeholder="Description" required  />
-          <input type="number" value={updatedService.price} onChange={(e) => setUpdatedService({ ...updatedService, price: parseFloat(e.target.value) })} placeholder="Price" required  />
-          <input type="number" value={updatedService.quantity} onChange={(e) => setUpdatedService({ ...updatedService, quantity: parseInt(e.target.value) })} placeholder="Quantity" required  />
-          <input type="file" onChange={handleImageChange} accept="image/*" /> {/* Input for image upload */}
-          <button onClick={handleUpdateService}>Update Service</button>
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const productData = {
+            ...updatedProduct,
+            price: parseFloat(updatedProduct.price),
+            quantity_available: parseInt(updatedProduct.quantity_available, 10)
+        };
+
+        try {
+            const response = await fetch(`/userproducts/${selectedProduct.id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(productData)
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Product updated:', data);
+                // Optionally, handle any post-update logic here, such as redirecting or displaying a success message
+            } else {
+                const errorData = await response.json();
+                console.error('Error updating product:', errorData);
+            }
+        } catch (error) {
+            console.error('There was an error updating the product!', error);
+        }
+    };
+
+    return (
+        <div className='update-products'>
+            <h2>Update Service</h2>
+            <select onChange={(e) => handleProductSelect(JSON.parse(e.target.value))}>
+                <option>Select Service</option>
+                {products.map((product) => (
+                    <option key={product.id} value={JSON.stringify(product)}>
+                        {product.name}
+                    </option>
+                ))}
+            </select>
+            {selectedProduct && (
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <label>Pet:</label>
+                        <input type="text" name="pet" value={updatedProduct.pet} onChange={handleChange} />
+                    </div>
+                    <div>
+                        <label>Name:</label>
+                        <input type="text" name="name" value={updatedProduct.name} onChange={handleChange} required />
+                    </div>
+                    <div>
+                        <label>Description:</label>
+                        <textarea name="description" value={updatedProduct.description} onChange={handleChange} required></textarea>
+                    </div>
+                    <div>
+                        <label>Price:</label>
+                        <input type="number" name="price" value={updatedProduct.price} onChange={handleChange} required />
+                    </div>
+                    <div>
+                        <label>Image URL:</label>
+                        <input type="text" name="image_url" value={updatedProduct.image_url} onChange={handleChange} required />
+                    </div>
+                    <div>
+                        <label>Quantity Available:</label>
+                        <input type="number" name="quantity_available" value={updatedProduct.quantity_available} onChange={handleChange} required />
+                    </div>
+                    <div>
+                        <label>Type:</label>
+                        <input type="text" name="type" value={updatedProduct.type} onChange={handleChange} required />
+                    </div>
+                    <button type="submit">Update Product</button>
+                </form>
+            )}
         </div>
-      )}
-    </div>
-  );
+    );
 };
 
-export default PatchService;
+export default PatchProduct;

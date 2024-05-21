@@ -9,22 +9,15 @@ const Products = () => {
   const [sortOption, setSortOption] = useState('Default');
 
   useEffect(() => {
-    // Fetch products from the backend
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch('/userproducts');
-        if (response.ok) {
-          const data = await response.json();
-          setProducts(data);
-        } else {
-          console.error('Failed to fetch products');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    };
-    fetchProducts();
-  }, []);
+    
+
+  fetch('/userproducts')
+  .then(response =>response.json())
+  .then(data =>{
+    const filteredProducts= data.filter(item => item.type === 'product');
+    setProducts(filteredProducts);
+  });
+},[]);
 
   const handleProductClick = (product) => {
     setSelectedProduct(product);
@@ -64,16 +57,16 @@ const Products = () => {
 
   return (
     <div>
-      <div className="flexColStart p-head">
+      {/* <div className="flexColStart p-head">
         <span className='orangeText'>Best Choices</span>
         <span className='primaryText'>Popular Categories</span>
-      </div>
+      </div> */}
       <h2>PRODUCTS</h2>
       <select value={sortOption} onChange={handleSort}>
-        <option value="Default">Default Sorting</option>
-        <option value="Title">Sort By Name</option>
+        <option value="Default">DEFAULT VIEW</option>
+        <option value="Title">VIEW BY NAME</option>
         <option value="Price-low">By Price: low to high</option>
-        <option value="Price-high"> By Price: high to low</option>
+        <option value="Price-high"> Price: high to low</option>
       </select>
       <div className="product-grid">
         {products.map((product) => (
@@ -87,7 +80,7 @@ const Products = () => {
             </div>
             {selectedProduct && selectedProduct.id === product.id && (
               <div>
-                <p>{product.description}</p>
+                
                 <button onClick={() => handleAddToCart(product)}>Add to Cart</button>
                 
               </div>
@@ -95,9 +88,61 @@ const Products = () => {
           </div>
         ))}
       </div>
-      {/* <Cart cartItems={cartItems} onRemoveFromCart={handleRemoveFromCart} /> */}
+      
     </div>
   );
 };
 
 export default Products;
+
+
+// import React, { useEffect, useState } from 'react';
+// import { Link } from 'react-router-dom';
+
+// const ProductList = () => {
+//   const [products, setProducts] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
+
+//   useEffect(() => {
+//     const fetchProducts = async () => {
+//       try {
+//         const response = await fetch('/userproducts');
+//         if (!response.ok) {
+//           throw new Error('Network response was not ok');
+//         }
+//         const data = await response.json();
+//         setProducts(data);
+//       } catch (err) {
+//         setError(err);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+//     fetchProducts();
+//   }, []);
+
+//   if (loading) return <div>Loading...</div>;
+//   if (error) {
+//     console.error(error); // Log the error for debugging
+//     return <div>Error loading products: {error.message}</div>;
+//   }
+
+//   return (
+//     <div>
+//       {products.length === 0 ? (
+//         <div>No products available</div>
+//       ) : (
+//         <ul>
+//           {products.map(product => (
+//             <li key={product.id}>
+//               <Link to={`/products/${product.id}`}>{product.name}</Link>
+//             </li>
+//           ))}
+//         </ul>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default ProductList;

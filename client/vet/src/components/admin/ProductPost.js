@@ -1,117 +1,144 @@
-
-
-
-
-
-import './PostProducts.css';
-
-
-
-
 import React, { useState } from 'react';
+import './PostProducts.css' 
 
-function ProductTextualForm({ onSubmit }) {
-    const [formData, setFormData] = useState({
+const PostProduct = () => {
+    const [product, setProduct] = useState({
         pet: '',
         name: '',
         description: '',
         price: '',
-        quantity_available: ''
+        image_url: '',
+        quantity_available: '',
+        type: ''
     });
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prevData => ({
-            ...prevData,
-            [name]: value
-        }));
+        setProduct({ ...product, [name]: value });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        // Ensure the price and quantity are properly parsed as numbers
+        const productData = {
+            ...product,
+            price: parseFloat(product.price),
+            quantity_available: parseInt(product.quantity_available, 10),
+            type: String(product.type,)  // Ensure type is a string
+        };
+
         try {
-            const response = await fetch('/products/textual', {
+            const response = await fetch('/adminproducts', {  // Corrected URL
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(productData)
             });
-            if (!response.ok) {
-                throw new Error('Failed to create product');
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Product added:', data);
+                // Clear the form or provide feedback to the user
+                setProduct({
+                    pet: '',
+                    name: '',
+                    description: '',
+                    price: '',
+                    image_url: '',
+                    quantity_available: '',
+                    type: ''
+                });
+            } else {
+                const errorData = await response.json();
+                console.error('Error adding product:', errorData);
             }
-            const data = await response.json();
-            onSubmit(data.id);
         } catch (error) {
-            console.error('Error creating product:', error);
+            console.error('There was an error adding the product!', error);
         }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <input type="text" name="pet" value={formData.pet} onChange={handleChange} placeholder="Pet" />
-            <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Name" />
-            <textarea name="description" value={formData.description} onChange={handleChange} placeholder="Description" />
-            <input type="number" name="price" value={formData.price} onChange={handleChange} placeholder="Price" />
-            <input type="number" name="quantity_available" value={formData.quantity_available} onChange={handleChange} placeholder="Quantity Available" />
-            <button type="submit">Create Product</button>
+        <form className="post-product-form" onSubmit={handleSubmit}>
+            <div className="form-group">
+                <label className="form-label">Pet:</label>
+                <input
+                    className="form-input"
+                    type="text"
+                    name="pet"
+                    value={product.pet}
+                    onChange={handleChange}
+                />
+            </div>
+            <div className="form-group">
+                <label className="form-label">Name:</label>
+                <input
+                    className="form-input"
+                    type="text"
+                    name="name"
+                    value={product.name}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
+            <div className="form-group">
+                <label className="form-label">Description:</label>
+                <textarea
+                    className="form-input"
+                    name="description"
+                    value={product.description}
+                    onChange={handleChange}
+                    required
+                ></textarea>
+            </div>
+            <div className="form-group">
+                <label className="form-label">Price:</label>
+                <input
+                    className="form-input"
+                    type="number"
+                    name="price"
+                    value={product.price}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
+            <div className="form-group">
+                <label className="form-label">Image URL:</label>
+                <input
+                    className="form-input"
+                    type="text"
+                    name="image_url"
+                    value={product.image_url}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
+            <div className="form-group">
+                <label className="form-label">Quantity Available:</label>
+                <input
+                    className="form-input"
+                    type="number"
+                    name="quantity_available"
+                    value={product.quantity_available}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
+            <div className="form-group">
+                <label className="form-label">Type:</label>
+                <input
+                    className="form-input"
+                    type="text"
+                    name="type"
+                    value={product.type}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
+            <button className="form-button" type="submit">Add Product</button>
         </form>
     );
-}
+};
 
-function ProductImageForm({ productId }) {
-    const [images, setImages] = useState([]);
-
-    const handleImageChange = (e) => {
-        setImages(Array.from(e.target.files));
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            const formData = new FormData();
-            formData.append('product_id', productId);
-            images.forEach((image) => {
-                formData.append('images', image);
-            });
-            const response = await fetch('/products/images', {
-                method: 'POST',
-                body: formData
-            });
-            if (!response.ok) {
-                throw new Error('Failed to upload images');
-            }
-            console.log('Images uploaded successfully');
-        } catch (error) {
-            console.error('Error uploading images:', error);
-        }
-    };
-
-    return (
-        <form onSubmit={handleSubmit}>
-            <input type="file" name="images" onChange={handleImageChange} accept="image/*" multiple />
-            <button type="submit">Upload Images</button>
-        </form>
-    );
-}
-
-function ProductCreationPage() {
-    const [productId, setProductId] = useState(null);
-
-    const handleProductCreated = (id) => {
-        setProductId(id);
-    };
-
-    return (
-        <div>
-            <h1>Create Product</h1>
-            {!productId ? (
-                <ProductTextualForm onSubmit={handleProductCreated} />
-            ) : (
-                <ProductImageForm productId={productId} />
-            )}
-        </div>
-    );
-}
-
-export default ProductCreationPage;
+export default PostProduct;

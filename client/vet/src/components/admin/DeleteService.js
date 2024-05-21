@@ -5,39 +5,37 @@ import './DeleteService.css';
 
 
 function DeleteService() {
+  
+
     const [services, setServices] = useState([]);
-
     
-
     useEffect(() => {
-        fetch("/adminservices")
+        fetch("/adminproducts")
             .then(resp => resp.json())
             .then((data) => {
-                setServices(data);
+                // Filter products with type 'product'
+                const filteredServices = data.filter(item => item.type === 'service');
+                setServices(filteredServices);
             })
             .catch(error => {
                 console.error('Error fetching products data:', error);
             });
     }, []);
 
-    
-
-    
-    const handleDelete = (serviceId) => {
-        fetch(`/adminservices/${serviceId}`, {
-            method: 'DELETE',
-        })
-            .then(resp => {
-                if (resp.ok) {
-                    // Remove the deleted product from the state
-                    setServices(services.filter(service => service.id !== serviceId));
-                } else {
-                    console.error('Error deleting product');
-                }
-            })
-            .catch(error => {
-                console.error('Error deleting product:', error);
+    const handleDelete = async (serviceId) => {
+        try {
+            const resp = await fetch(`/adminproducts/${serviceId}`, {
+                method: 'DELETE',
             });
+            if (resp.ok) {
+                // Remove the deleted product from the state
+                setServices(services.filter(service => service.id !== serviceId));
+            } else {
+                console.error('Error deleting product');
+            }
+        } catch (error) {
+            console.error('Error deleting product:', error);
+        }
     };
 
     return (

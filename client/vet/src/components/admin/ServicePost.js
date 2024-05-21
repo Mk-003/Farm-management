@@ -1,97 +1,144 @@
-
-
-
 import React, { useState } from 'react';
-import './PostService.css';
+import './PostService.css' 
 
-
-
-function ServicePost(){
-
-    const [formData, setFormData] = useState({
+const PostProduct = () => {
+    const [product, setProduct] = useState({
+        pet: '',
         name: '',
         description: '',
         price: '',
-        image: null, // New state for the uploaded image
+        image_url: '',
         quantity_available: '',
+        type: ''
     });
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData(prevData => ({
-            ...prevData,
-            [name]: value
-        }));
-    };
-
-    const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        setFormData(prevData => ({
-            ...prevData,
-            image: file
-        }));
+        setProduct({ ...product, [name]: value });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            const formDataWithImage = new FormData();
-            formDataWithImage.append('name', formData.name);
-            formDataWithImage.append('description', formData.description);
-            formDataWithImage.append('price', formData.price);
-            formDataWithImage.append('quantity_available', formData.quantity_available);
-            formDataWithImage.append('image', formData.image);
 
-            const response = await fetch('/adminservices/${id}', {
+        // Ensure the price and quantity are properly parsed as numbers
+        const productData = {
+            ...product,
+            price: parseFloat(product.price),
+            quantity_available: parseInt(product.quantity_available, 10),
+            type: String(product.type,)  // Ensure type is a string
+        };
+
+        try {
+            const response = await fetch('/adminproducts', {  // Corrected URL
                 method: 'POST',
-                body: formDataWithImage,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(productData)
             });
-            if (!response.ok) {
-                throw new Error('Failed to create service');
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Product added:', data);
+                // Clear the form or provide feedback to the user
+                setProduct({
+                    pet: '',
+                    name: '',
+                    description: '',
+                    price: '',
+                    image_url: '',
+                    quantity_available: '',
+                    type: ''
+                });
+            } else {
+                const errorData = await response.json();
+                console.error('Error adding product:', errorData);
             }
-            // Optionally, you can reset the form fields here
-            setFormData({
-                name: '',
-                description: '',
-                price: '',
-                image: null,
-                quantity_available: ''
-            });
         } catch (error) {
-            console.error('Error creating service:', error);
+            console.error('There was an error adding the product!', error);
         }
     };
 
-    return(
-        <div className="post-services">
-            <div className="post-services-form">
-                <span>Add A Service</span>
-                <form onSubmit={handleSubmit}>
-                    <div>
-                        <label htmlFor="name">Service Name</label>
-                        <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Name" required />
-                    </div>
-                    <div>
-                        <label htmlFor="description">Description</label>
-                        <textarea name="description" value={formData.description} onChange={handleChange} placeholder="Description" required />
-                    </div>
-                    <div>
-                        <label htmlFor="price">Price</label>
-                        <input type="number" name="price" value={formData.price} onChange={handleChange} placeholder="Price" required />
-                    </div>
-                    <div>
-                        <label htmlFor="quantity_available">Quantity</label>
-                        <input type="number" name="quantity_available" value={formData.quantity_available} onChange={handleChange} placeholder="Quantity Available" required />
-                    </div>
-                    <div>
-                        <label htmlFor="image">Image</label>
-                        <input type="file" name="image" onChange={handleImageChange} accept="image/*" />
-                    </div>
-                    <button type="submit">Add Service</button>
-                </form>
+    return (
+        <form className="post-product-form" onSubmit={handleSubmit}>
+            <div className="form-group">
+                <label className="form-label">Pet:</label>
+                <input
+                    className="form-input"
+                    type="text"
+                    name="pet"
+                    value={product.pet}
+                    onChange={handleChange}
+                />
             </div>
-        </div>
+            <div className="form-group">
+                <label className="form-label">Name:</label>
+                <input
+                    className="form-input"
+                    type="text"
+                    name="name"
+                    value={product.name}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
+            <div className="form-group">
+                <label className="form-label">Description:</label>
+                <textarea
+                    className="form-input"
+                    name="description"
+                    value={product.description}
+                    onChange={handleChange}
+                    required
+                ></textarea>
+            </div>
+            <div className="form-group">
+                <label className="form-label">Price:</label>
+                <input
+                    className="form-input"
+                    type="number"
+                    name="price"
+                    value={product.price}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
+            <div className="form-group">
+                <label className="form-label">Image URL:</label>
+                <input
+                    className="form-input"
+                    type="text"
+                    name="image_url"
+                    value={product.image_url}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
+            <div className="form-group">
+                <label className="form-label">Quantity Available:</label>
+                <input
+                    className="form-input"
+                    type="number"
+                    name="quantity_available"
+                    value={product.quantity_available}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
+            <div className="form-group">
+                <label className="form-label">Type:</label>
+                <input
+                    className="form-input"
+                    type="text"
+                    name="type"
+                    value={product.type}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
+            <button className="form-button" type="submit">Add SERVICE</button>
+        </form>
     );
-}
+};
 
-export default ServicePost;
+export default PostProduct;

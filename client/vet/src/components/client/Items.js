@@ -26,10 +26,7 @@ const Items=()=>{
   const fetchProducts = async () => {
     try {
       let url = '/userproducts';
-      if (filterOption !== 'All') {
-        const type = filterOption === 'Products' ? 1 : 2;
-        url += `?type=${type}`;
-      }
+      
       const response = await fetch(url);
       if (response.ok) {
         const data = await response.json();
