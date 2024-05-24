@@ -8,7 +8,9 @@ from sqlalchemy.orm import sessionmaker
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity, create_access_token, get_jwt
 from flask_bcrypt import Bcrypt
 from functools import wraps
-
+from werkzeug.security import check_password_hash
+import logging
+logging.basicConfig(level=logging.DEBUG)
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'
@@ -48,15 +50,24 @@ class UserRegister(Resource):
     def post(self):
         data = request.get_json(force=True)
 
+        # Log received data for debugging
+        print('Received data:', data)
+
+        if not data:
+            return jsonify({'error': 'Missing JSON in request'}), 400
+
         username = data.get('username')
         email = data.get('email')
         phone_number = data.get('phone_number')
         password = data.get('password')
         confirm_password = data.get('confirm_password')
 
-        user_exists = User.query.filter_by(username=username).first()
+        
 
-        if user_exists:
+        if not all([username, email, phone_number, password, confirm_password]):
+            return jsonify({'error': 'Missing fields in request'}), 400
+
+        if User.query.filter_by(username=username).first():
             return jsonify({'error': 'User already exists'}), 409
         
         if password != confirm_password:
@@ -111,28 +122,72 @@ class UserLogin(Resource):
             "access_token": access_token
         }), 201
 
-api.add_resource(UserLogin, '/user/login')
+api.add_resource(UserLogin, '/userlogin')
 
 # Admin Login
+# class AdminLogin(Resource):
+#     @cross_origin()
+#     def post(self):
+#         data = request.get_json(force=True)
+
+#         username = data.get('username')
+#         password = data.get('password')
+
+#         # Checks if the admin exists in the Admin Table
+#         admin = Admin.query.filter_by(username=username).first()
+
+#         if admin is None:
+#             return jsonify({'error': 'Unauthorized'}), 401
+        
+#         if not bcrypt.check_password_hash(admin.password, password):
+#             return jsonify({'error': 'Unauthorized, incorrect password'}), 401
+        
+#         # Generate access token with role included
+#         access_token = create_access_token(identity={'username': username, 'role': 'admin'})
+
+#         return jsonify({
+#             "id": admin.id,
+#             "username": admin.username,
+#             "access_token": access_token
+#         }), 201
+
+# api.add_resource(AdminLogin, '/adminlogin')
+
+
+def create_admin_users():
+    admin1 = Admin(username='Hen', email='kuku@gmail.com', password=check_password_hash('kuku'), role='admin')
+    admin2 = Admin(username='Duck', email='bata@gmail.com', password=check_password_hash('bata'), role='admin')
+    db.session.add(admin1)
+    db.session.add(admin2)
+    db.session.commit()
+
+
+
 class AdminLogin(Resource):
     @cross_origin()
     def post(self):
         data = request.get_json(force=True)
-
         username = data.get('username')
         password = data.get('password')
 
-        # Checks if the admin exists in the Admin Table
+        logging.debug(f"Attempting login for user: {username}")
+
+        # Check if the admin exists in the Admin table
         admin = Admin.query.filter_by(username=username).first()
 
         if admin is None:
+            logging.debug(f"User {username} not found.")
             return jsonify({'error': 'Unauthorized'}), 401
-        
-        if not bcrypt.check_password_hash(admin.password, password):
-            return jsonify({'error': 'Unauthorized, incorrect password'}), 401
-        
+
+        if admin is None or not check_password_hash(admin.password, password):
+            logging.debug(f"Incorrect password for user {username}.")
+            return jsonify({'error': 'Unauthorized'}), 401
+
         # Generate access token with role included
         access_token = create_access_token(identity={'username': username, 'role': 'admin'})
+        
+        logging.debug(f"User {username} logged in successfully.")
+
 
         return jsonify({
             "id": admin.id,
@@ -140,7 +195,7 @@ class AdminLogin(Resource):
             "access_token": access_token
         }), 201
 
-api.add_resource(AdminLogin, '/admin/login')
+api.add_resource(AdminLogin, '/adminlogin')
 
 
 # User Logout
@@ -319,130 +374,200 @@ class ProductOrders(Resource):
 api.add_resource(ProductOrders,"/userProductOrders")
 
 
+# class ShoppingCart(Resource):
+#     @jwt_required()
+#     def get(self):
+#         # Retrieve current user's ID
+#         current_user_id = get_jwt_identity()
+
+#         # Query database to find the user's cart
+#         user_cart = Cart.query.filter_by(user_id=current_user_id).first()
+
+#         if user_cart:
+#             # Serialize the user's cart
+#             serialized_cart = user_cart.to_dict()
+
+#             # Optionally, include cart items
+#             serialized_cart_items = []
+#             for cart_item in user_cart.cart_items:
+#                 serialized_cart_item = cart_item.to_dict()
+#                 serialized_cart_items.append(serialized_cart_item)
+
+#             # Add cart items to the serialized cart
+#             serialized_cart['cart_items'] = serialized_cart_items
+
+#             # Return serialized cart as JSON response
+#             return jsonify(serialized_cart), 200
+#         else:
+#             return {'message': 'Cart not found'}, 404
+        
+#     def post(self):
+#         current_user_id = get_jwt_identity()
+#         data = request.json
+
+#         try:
+#             # Extract product or service ID and quantity from request data
+#             product_id = data.get('product_id')
+#             # service_id = data.get('service_id')
+#             quantity = data.get('quantity')
+
+#             # Ensure that either product_id or service_id is provided
+#             if product_id:
+#                 if not Product.query.filter_by(id=product_id).first():
+#                     raise ValueError('Product with provided ID not found')
+#             # elif service_id:
+#             #     if not Service.query.filter_by(id=service_id).first():
+#             #         raise ValueError('Service with provided ID not found')
+#             else:
+#                 raise ValueError('A product_id must be provided')
+
+#             # Create a new cart item object based on the presence of product_id 
+#             if product_id:
+#                 new_cart_item = CartItem(
+#                     cart_id=current_user_id,
+#                     product_id=product_id,
+#                     quantity=quantity
+#                 )
+
+#             # Add the new cart item to the user's cart
+#             db.session.add(new_cart_item)
+
+#             # Commit the changes to the database
+#             db.session.commit()
+
+#             # Serialize the new cart item
+#             serialized_cart_item = new_cart_item.to_dict()
+
+#             # Return the serialized cart item as the response
+#             return jsonify(serialized_cart_item), 201
+
+#         except Exception as e:
+#             db.session.rollback()
+#             return {'error': str(e)}, 400
+        
+#     def patch(self, item_id):
+#         current_user_id = get_jwt_identity()
+#         data = request.json
+
+#         try:
+#             # Extract updated quantity from request data
+#             updated_quantity = data.get('quantity')
+
+#             # Find the cart item with the specified item_id belonging to the current user
+#             cart_item = CartItem.query.filter_by(id=item_id, cart_id=current_user_id).first()
+
+#             if cart_item:
+#                 # Update the quantity of the cart item
+#                 cart_item.quantity = updated_quantity
+
+#                 # Commit the changes to the database
+#                 db.session.commit()
+
+#                 # Serialize the updated cart item
+#                 serialized_cart_item = cart_item.to_dict()
+
+#                 # Return the serialized cart item as the response
+#                 return jsonify(serialized_cart_item), 200
+#             else:
+#                 return {'error': 'Cart item not found'}, 404
+
+#         except Exception as e:
+#             db.session.rollback()
+#             return {'error': str(e)}, 400
+        
+#     def delete(self, item_id):
+#         current_user_id = get_jwt_identity()
+
+#         try:
+#             # Find the cart item with the specified item_id belonging to the current user
+#             cart_item = CartItem.query.filter_by(id=item_id, cart_id=current_user_id).first()
+
+#             if cart_item:
+#                 # Delete the cart item from the database
+#                 db.session.delete(cart_item)
+
+#                 # Commit the changes to the database
+#                 db.session.commit()
+
+#                 return {'message': 'Cart item deleted successfully'}, 200
+#             else:
+#                 return {'error': 'Cart item not found'}, 404
+
+#         except Exception as e:
+#             db.session.rollback()
+#             return {'error': str(e)}, 400
+
+# api.add_resource(ShoppingCart,'/userCart')
+
+
+#shopping NEW
+
 class ShoppingCart(Resource):
     @jwt_required()
     def get(self):
-        # Retrieve current user's ID
         current_user_id = get_jwt_identity()
-
-        # Query database to find the user's cart
         user_cart = Cart.query.filter_by(user_id=current_user_id).first()
 
         if user_cart:
-            # Serialize the user's cart
             serialized_cart = user_cart.to_dict()
-
-            # Optionally, include cart items
-            serialized_cart_items = []
-            for cart_item in user_cart.cart_items:
-                serialized_cart_item = cart_item.to_dict()
-                serialized_cart_items.append(serialized_cart_item)
-
-            # Add cart items to the serialized cart
+            serialized_cart_items = [item.to_dict() for item in user_cart.cart_items]
             serialized_cart['cart_items'] = serialized_cart_items
-
-            # Return serialized cart as JSON response
             return jsonify(serialized_cart), 200
         else:
             return {'message': 'Cart not found'}, 404
-        
+
+    @jwt_required()
     def post(self):
         current_user_id = get_jwt_identity()
         data = request.json
-
         try:
-            # Extract product or service ID and quantity from request data
             product_id = data.get('product_id')
-            # service_id = data.get('service_id')
             quantity = data.get('quantity')
-
-            # Ensure that either product_id or service_id is provided
-            if product_id:
-                if not Product.query.filter_by(id=product_id).first():
-                    raise ValueError('Product with provided ID not found')
-            # elif service_id:
-            #     if not Service.query.filter_by(id=service_id).first():
-            #         raise ValueError('Service with provided ID not found')
+            if product_id and quantity:
+                new_cart_item = CartItem(cart_id=current_user_id, product_id=product_id, quantity=quantity)
+                db.session.add(new_cart_item)
+                db.session.commit()
+                return jsonify(new_cart_item.to_dict()), 201
             else:
-                raise ValueError('A product_id must be provided')
-
-            # Create a new cart item object based on the presence of product_id 
-            if product_id:
-                new_cart_item = CartItem(
-                    cart_id=current_user_id,
-                    product_id=product_id,
-                    quantity=quantity
-                )
-
-            # Add the new cart item to the user's cart
-            db.session.add(new_cart_item)
-
-            # Commit the changes to the database
-            db.session.commit()
-
-            # Serialize the new cart item
-            serialized_cart_item = new_cart_item.to_dict()
-
-            # Return the serialized cart item as the response
-            return jsonify(serialized_cart_item), 201
-
+                raise ValueError('Invalid product_id or quantity')
         except Exception as e:
             db.session.rollback()
             return {'error': str(e)}, 400
-        
+
+    @jwt_required()
     def patch(self, item_id):
         current_user_id = get_jwt_identity()
         data = request.json
-
         try:
-            # Extract updated quantity from request data
             updated_quantity = data.get('quantity')
-
-            # Find the cart item with the specified item_id belonging to the current user
             cart_item = CartItem.query.filter_by(id=item_id, cart_id=current_user_id).first()
-
             if cart_item:
-                # Update the quantity of the cart item
                 cart_item.quantity = updated_quantity
-
-                # Commit the changes to the database
                 db.session.commit()
-
-                # Serialize the updated cart item
-                serialized_cart_item = cart_item.to_dict()
-
-                # Return the serialized cart item as the response
-                return jsonify(serialized_cart_item), 200
+                return jsonify(cart_item.to_dict()), 200
             else:
                 return {'error': 'Cart item not found'}, 404
-
         except Exception as e:
             db.session.rollback()
             return {'error': str(e)}, 400
-        
+
+    @jwt_required()
     def delete(self, item_id):
         current_user_id = get_jwt_identity()
-
         try:
-            # Find the cart item with the specified item_id belonging to the current user
             cart_item = CartItem.query.filter_by(id=item_id, cart_id=current_user_id).first()
-
             if cart_item:
-                # Delete the cart item from the database
                 db.session.delete(cart_item)
-
-                # Commit the changes to the database
                 db.session.commit()
-
                 return {'message': 'Cart item deleted successfully'}, 200
             else:
                 return {'error': 'Cart item not found'}, 404
-
         except Exception as e:
             db.session.rollback()
             return {'error': str(e)}, 400
 
-api.add_resource(ShoppingCart,'/userCart')
+api.add_resource(ShoppingCart, '/userCart', '/userCart/<int:item_id>')
+
 
 class UserShippingDetails(Resource):
     @jwt_required()
@@ -528,7 +653,7 @@ def get_post_update_and_delete_products():
     products = Product.query.all()
 
     if request.method == 'GET':
-        return jsonify([product.to_dict for product in products]), 200
+        return jsonify([product.to_dict() for product in products]), 200
     
     if request.method == 'POST':
         data = request.json
@@ -567,6 +692,10 @@ def get_post_update_and_delete_products():
         except Exception as e:
             db.session.rollback()
             return jsonify({'error': f'Failed to create product: {str(e)}'}), 500
+
+
+
+
         
 @app.route('/adminproducts/<int:id>', methods=['GET','PATCH','DELETE'])
 def get_update_and_delete_products(id):
