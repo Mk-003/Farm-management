@@ -199,7 +199,7 @@ const PatchProduct = () => {
         };
 
         try {
-            const response = await fetch(`/userproducts/${selectedProduct.id}`, {
+            const response = await fetch(`/adminproducts/${selectedProduct.id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json'

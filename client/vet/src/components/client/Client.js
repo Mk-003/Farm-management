@@ -1,7 +1,7 @@
 import ClientNavbar from "./ClientNavbar";
 // import { Route, Routes } from "react-router-dom"
 import { Outlet, useLocation } from "react-router-dom"
-import ClientHome from "./ClientHome";
+import ClientHome from "./Shop";
 
 
 

@@ -1,119 +1,132 @@
-import { useState } from "react";
-import { NavLink, useNavigate} from "react-router-dom";
-import "./Register.css";
-function Register() {
-    
-    const navigate = useNavigate();
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-    const [user, setUser] = useState({
-        username: "",
-        email: "",
-        phoneNumber: "",
-        password: "",
-        confirmPassword: "",
-        role: "client"
+function UserRegister() {
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    phoneNumber: '', // This will be sent as phone_number
+    password: '',
+    confirmPassword: '',
+  });
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Clear any previous error messages
+    setError('');
+
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+
+    const requestBody = {
+      username: formData.username,
+      email: formData.email,
+      phone_number: formData.phoneNumber, // Convert to snake_case
+      password: formData.password,
+      confirm_password: formData.confirmPassword, // Convert to snake_case
+    };
+
+    console.log('Submitting data:', requestBody); // Debugging log
+
+    const response = await fetch('/userRegister', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody),
     });
 
-    const handleInputs = (e) => {
-        let name = e.target.name;
-        let value = e.target.value;
-
-        setUser({ ...user, [name]: value });
-    };
-
-    const postData = async(e) => {
-        e.preventDefault();
-
-        const { username, email, phoneNumber, password,confirmPassword, role } = user;
-
-        if (password !== confirmPassword) {
-            window.alert('Passwords do not match');
-            return;
-        }
-    
-        try {
-
-        const res = await fetch('/userRegister', {
-            method: 'POST',
-            headers : {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                username, email,phoneNumber, password, role
-            })
-        });
-
-        const data = await res.json();
-        console.log(res);
-
-        if (res.status === 201){
-            localStorage.setItem('access_token', data.access_token);
-            window.alert('Registration successful');
-            navigate('/login');
-        } else {
-            window.alert('Registration failed');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        window.alert('An error occurred. Please try again.');
+    const result = await response.json();
+    if (response.ok) {
+      alert(JSON.stringify(result));
+      // Clear form fields after successful registration
+      setFormData({
+        username: '',
+        email: '',
+        phoneNumber: '',
+        password: '',
+        confirmPassword: '',
+      });
+      navigate('/login')
+    } else {
+      setError(result.error || 'Registration failed');
+      console.log('Error response:', result); // Debugging log
     }
-    };
+  };
 
-    return (
-       <div className="bodyReg">
-           <div className="container">
-            <div className="circle"></div>
-            <div className="circle"></div>
-            <div className="form-container">
-                <h1>Welcome to Petopia</h1>
-                <form method="POST">
-                    <div className="form-group">
-                        <label htmlFor="username">User Name</label>
-                        <input type="text" className="form-control" id="username" name="username" placeholder="Enter Username" value={user.username} onChange={handleInputs} />
-                    </div>
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
-                    <div className="form-group">
-                        <label htmlFor="email">Email</label>
-                        <input type="email" className="form-control" id="email" name="email" placeholder="Enter Email" value={user.email} onChange={handleInputs} />
-                    </div>
-                    <div className="form-group">
-              <label htmlFor="phoneNumber">Phone Number</label>
-              <input
-                type="text"
-                className="form-control"
-                id="phoneNumber"
-                name="phoneNumber"
-                placeholder="Enter Phone Number"
-                value={user.phoneNumber}
-                onChange={handleInputs}
-              />
-            </div>
-                    
-                    <div className="form-group">
-                        <label htmlFor="password">Password</label>
-                        <input type="password" className="form-control" id="password" name="password"  placeholder="Enter Password" value={user.password} onChange={handleInputs}/>
-                    </div>
-                    
-                    <div className="form-group">
-                        <label htmlFor="confirmPassword">Confirm Password</label>
-                        <input type="password" className="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" value={user.confirmPassword} onChange={handleInputs}/>
-                    </div>
-                    
-                    <div className="form-group">
-                        <label htmlFor="role">Role</label>
-                        <select className="form-control" id="role" name="role" value={user.role} onChange={handleInputs}>
-                            <option value="client">Client</option>
-                            <option value="admin">Admin</option>
-                        </select>
-                    </div>
-                    
-                    <span className="register-span">Already Registered? <NavLink to='/login'>Log in</NavLink><br /> <br /></span>
-                    <button type="submit" className="btn btn-primary" id="register" name="register" onClick={postData}>Register</button>
-                </form>
-            </div>
-        </div>
-       </div>
-    );
+  const toggleShowConfirmPassword = () => {
+    setShowConfirmPassword(!showConfirmPassword);
+  };
+
+  return (
+    <div>
+      <h2>User Registration</h2>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Username:
+          <input type="text" name="username" value={formData.username} onChange={handleChange} required />
+        </label>
+        <br />
+        <label>
+          Email:
+          <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+        </label>
+        <br />
+        <label>
+          Phone Number:
+          <input type="text" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} required />
+        </label>
+        <br />
+        <label>
+          Password:
+          <input
+            type={showPassword ? 'text' : 'password'}
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+          <button type="button" onClick={toggleShowPassword}>
+            {showPassword ? 'Hide' : 'Show'}
+          </button>
+        </label>
+        <br />
+        <label>
+          Confirm Password:
+          <input
+            type={showConfirmPassword ? 'text' : 'password'}
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            required
+          />
+          <button type="button" onClick={toggleShowConfirmPassword}>
+            {showConfirmPassword ? 'Hide' : 'Show'}
+          </button>
+        </label>
+        <br />
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        <button type="submit">Register</button>
+      </form>
+    </div>
+  );
 }
 
-export default Register;
+export default UserRegister;

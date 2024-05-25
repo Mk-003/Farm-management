@@ -1,136 +1,157 @@
-import React, { useState, useEffect } from 'react';
+// 
 
-const Cart = () => {
-    const [cart, setCart] = useState(null);
-    const [loading, setLoading] = useState(true);
+
+
+
+import React, { useState, useEffect } from 'react';
+import './Cart.css';
+import { NavLink } from 'react-router-dom';
+
+function Cart() {
+    const [cartItems, setCartItems] = useState([]);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [success, setSuccess] = useState(false);
 
     useEffect(() => {
-        // Fetch the user's cart when the component mounts
-        fetch('/userCart', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}` // Assuming JWT is stored in localStorage
+        const fetchCartItems = async () => {
+            setLoading(true);
+            try {
+                const response = await fetch('/userCart', { // Relative URL
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}` 
+                    }
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    setCartItems(data.cart_items);
+                } else {
+                    setError('Failed to fetch cart items');
+                }
+            } catch (error) {
+                setError('An error occurred while fetching cart items');
+            } finally {
+                setLoading(false);
             }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.message !== 'Cart not found') {
-                setCart(data);
-            } else {
-                setCart(null);
-            }
-            setLoading(false);
-        })
-        .catch(error => {
-            setError(error);
-            setLoading(false);
-        });
+        };
+        fetchCartItems();
     }, []);
 
-    const addItemToCart = (productId, quantity) => {
-        fetch('/userCart', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            },
-            body: JSON.stringify({ product_id: productId, quantity })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (cart) {
-                setCart(prevCart => ({
-                    ...prevCart,
-                    cart_items: [...prevCart.cart_items, data]
-                }));
+    const handlePlaceOrder = async () => {
+        setLoading(true);
+        setError(null);
+        setSuccess(false);
+
+        try {
+            const res = await fetch('/userProductOrders', { // Relative URL
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    total: cartItems.reduce((total, item) => total + item.price * item.quantity, 0),
+                    items: cartItems.map(item => ({ id: item.id, quantity: item.quantity })),
+                }),
+            });
+
+            if (res.ok) {
+                setSuccess(true);
+                setCartItems([]);
             } else {
-                setCart({ cart_items: [data] });
+                setError('Failed to place order');
             }
-        })
-        .catch(error => setError(error));
+        } catch (error) {
+            console.error('Error:', error);
+            setError('An error occurred while processing your request');
+        } finally {
+            setLoading(false);
+        }
     };
 
-    const updateCartItem = (itemId, quantity) => {
-        fetch(`/userCart/${itemId}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            },
-            body: JSON.stringify({ quantity })
-        })
-        .then(response => response.json())
-        .then(data => {
-            setCart(prevCart => ({
-                ...prevCart,
-                cart_items: prevCart.cart_items.map(item =>
-                    item.id === itemId ? data : item
-                )
-            }));
-        })
-        .catch(error => setError(error));
+    const handleRemove = (itemToRemove) => {
+        setCartItems(cartItems.filter(item => item.id !== itemToRemove.id));
     };
 
-    const deleteCartItem = (itemId) => {
-        fetch(`/userCart/${itemId}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
-            }
-        })
-        .then(response => response.json())
-        .then(() => {
-            setCart(prevCart => ({
-                ...prevCart,
-                cart_items: prevCart.cart_items.filter(item => item.id !== itemId)
-            }));
-        })
-        .catch(error => setError(error));
+    const handleIncrease = (itemToIncrease) => {
+        setCartItems(cartItems.map(item => 
+            item.id === itemToIncrease.id ? { ...item, quantity: item.quantity + 1 } : item
+        ));
     };
 
-    if (loading) {
-        return <div>Loading...</div>;
-    }
+    const handleDecrease = (itemToDecrease) => {
+        setCartItems(cartItems.map(item => 
+            item.id === itemToDecrease.id && item.quantity > 1 ? { ...item, quantity: item.quantity - 1 } : item
+        ));
+    };
 
-    if (error) {
-        return <div>Error: {error.message}</div>;
-    }
-
-    if (!cart) {
-        return <div>Your cart is empty.</div>;
-    }
+    const total = cartItems.reduce((total, item) => {
+        return total + item.price * item.quantity;
+    }, 0);
 
     return (
-        <div>
-            <h1>Your Cart</h1>
-            <ul>
-                {cart.cart_items.map(item => (
-                    <li key={item.id}>
-                        {item.product_id} - Quantity: {item.quantity}
-                        <button onClick={() => updateCartItem(item.id, item.quantity + 1)}>+</button>
-                        <button onClick={() => updateCartItem(item.id, item.quantity - 1)}>-</button>
-                        <button onClick={() => deleteCartItem(item.id)}>Remove</button>
-                    </li>
-                ))}
-            </ul>
-            <div>
-                <h2>Add New Item</h2>
-                <form onSubmit={(e) => {
-                    e.preventDefault();
-                    const productId = e.target.productId.value;
-                    const quantity = e.target.quantity.value;
-                    addItemToCart(productId, quantity);
-                }}>
-                    <input type="text" name="productId" placeholder="Product ID" required />
-                    <input type="number" name="quantity" placeholder="Quantity" required />
-                    <button type="submit">Add to Cart</button>
-                </form>
-            </div>
+        <div className="client-cart-page">
+            {cartItems.length === 0 ? (
+                <div className="empty-cart">
+                    <h2>Your cart is empty</h2>
+                    <img src="https://cdn.dribbble.com/users/675297/screenshots/4334597/basti.gif" alt="Empty Cart" />
+                </div>            
+            ) : (
+                <>
+                    <h2>Shopping Cart</h2>
+                    <div className="client-cart">
+                        <div className="client-cart-titles">
+                            <h4>Product</h4>
+                            <h4>Price</h4>
+                            <h4>Quantity</h4>
+                            <h4>Total</h4>
+                        </div>
+                        {cartItems.map((item, index) => (
+                            <div className="client-cart-card" key={index}>
+                                <div className="product-details">
+                                    <img src={item.image_url} alt={item.name} />
+                                    <div className="product-name">
+                                        <p>{item.name}</p>
+                                        <button onClick={() => handleRemove(item)}>Remove</button>
+                                    </div>   
+                                </div>
+                                <p>${item.price}</p>
+                                <div className="quantity">
+                                    <button 
+                                        onClick={() => handleDecrease(item)}
+                                        disabled={item.quantity <= 1}
+                                    >-</button>
+                                    <span>{item.quantity}</span>
+                                    <button onClick={() => handleIncrease(item)}>+</button>
+                                </div>
+                                <p className='total-price'>${item.quantity * item.price}</p>
+                            </div>
+                        ))}
+                        <div className="total">
+                            <h4>Subtotal</h4>
+                            <h4>${total}</h4>
+                        </div>
+                        <div className="checkout-button">
+                            <button className='button' onClick={handlePlaceOrder} disabled={loading}>
+                                {loading ? 'Processing...' : 'Checkout'}
+                            </button>
+                            {error && <p className="error">{error}</p>}
+                            {success && <p className="success">Order placed successfully!</p>}
+                        </div>
+                        <div className="continue-shopping">
+                            <NavLink className="client-nav-link" to='/client/products'> Continue Shopping</NavLink>
+                        </div>
+                    </div>
+                </>
+            )}
         </div>
     );
-};
+}
 
 export default Cart;
+
+
+
+
+

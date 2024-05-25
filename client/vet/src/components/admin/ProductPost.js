@@ -23,8 +23,8 @@ const PostProduct = () => {
         // Ensure the price and quantity are properly parsed as numbers
         const productData = {
             ...product,
-            price: parseFloat(product.price),
-            quantity_available: parseInt(product.quantity_available, 10),
+            price: parseFloat(product.price) >= 0 ? parseFloat(product.price) : 0 ,
+            quantity_available: parseInt(product.quantity_available, 10) >= 0 ? parseFloat(product.quantity_available,10) : 0,
             type: String(product.type,)  // Ensure type is a string
         };
 

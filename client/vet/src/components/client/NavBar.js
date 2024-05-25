@@ -38,6 +38,11 @@ const Navbar = () => {
                                 HOME
                             </NavLink>
                         </li>
+                        <li className='nav-item'>
+                            <NavLink className='nav-link' to='/register'>
+                            REGISTER
+                            </NavLink>
+                        </li>
                         <li className="nav-item">
                             <NavLink className="nav-link" to="/login">
                                 LOGIN
@@ -52,6 +57,16 @@ const Navbar = () => {
                         <li>   
                             <NavLink className="nav-link" to="/services">
                                 SERVICES
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink className='nav-admin' to='/AdminLogin'>
+                                ADMIN
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to='/cart'>
+                                CART
                             </NavLink>
                         </li>
                         

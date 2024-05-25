@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Services.css';
 
 const Services = () => {
   const [services, setServices] = useState([]);
-  const [selectedService, setSelectedService] = useState(null);
+  // const [selectedService, setSelectedService] = useState(null);
   const [displayOption, setDisplayOption] = useState('Default');
   const [cartItems, setCartItems] = useState([]);
+  const navigate =useNavigate();
 
   useEffect(() => {
     fetch('/userproducts')
@@ -17,7 +19,7 @@ const Services = () => {
   }, []);
 
   const handleServiceClick = (service) => {
-    setSelectedService(service);
+    navigate(`/service/${service.id}`)
   };
 
   const handleAddToCart = (service) => {
@@ -64,16 +66,12 @@ const Services = () => {
             <div onClick={() => handleServiceClick(service)}>
               <img src={service.image_url} alt={service.name} />
               <h3>{service.name}</h3>
-              <p>Price: ${service.price}</p>
+              <p>Price: kes{service.price}</p>
               <p>{service.description}</p>
             </div>
-            {selectedService && selectedService.id === service.id && (
-              <div>
-                <p>{service.description}</p>
                 <button onClick={() => handleAddToCart(service)}>Add to Cart</button>
               </div>
-            )}
-          </div>
+
         ))}
       </div>
     </div>
@@ -81,3 +79,5 @@ const Services = () => {
 };
 
 export default Services;
+
+

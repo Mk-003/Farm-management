@@ -1,21 +1,17 @@
-
-
-
-
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+// AdminLogin.js
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from './AuthContext';
 
-function UserLogin() {
+function AdminLogin() {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
   });
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState('');
-
+  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,7 +21,9 @@ function UserLogin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await fetch('/userlogin', {
+    setError('');
+
+    const response = await fetch('http://localhost:5000/admin/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -34,29 +32,17 @@ function UserLogin() {
     });
 
     const result = await response.json();
-    if(response.ok){
-      alert(JSON.stringify(result));
-      setFormData({
-        username:'',
-        password:'',
-      });
-      // Redirect to homepage
-      navigate('/');
-    } else{
+    if (response.ok) {
+      login('admin');
+      navigate('/admin/navbar');
+    } else {
       setError(result.error || 'Login failed');
-      console.log('Error response:', result); // Debugging log
     }
-    
-    
-  };
-
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
   };
 
   return (
     <div>
-      <h2>User Login</h2>
+      <h2>Admin Login</h2>
       <form onSubmit={handleSubmit}>
         <label>
           Username:
@@ -65,23 +51,20 @@ function UserLogin() {
         <br />
         <label>
           Password:
-          <input type={showPassword ? 'text' : 'password'} 
-          name="password" value={formData.password} onChange={handleChange} required />
-          <button type="button" onClick={toggleShowPassword}>
-            {showPassword ? 'Hide' : 'Show'}
-          </button>
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
         </label>
         <br />
         {error && <p style={{ color: 'red' }}>{error}</p>}
         <button type="submit">Login</button>
       </form>
-      <p>
-        Don't have an account? <Link to="/register">Register here</Link>
-      </p>
     </div>
   );
 }
 
-export default UserLogin;
-
-
+export default AdminLogin;
