@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Cart from './Cart';
 import Products from './Products';
 
@@ -7,10 +6,6 @@ const Shop = () => {
     const [cart, setCart] = useState([]);
 
     const addItemToCart = (productId, quantity) => {
-
-        const token = localStorage.getItem('token');
-    console.log('Token:', token); 
-
         fetch('/userCart', {
             method: 'POST',
             headers: {
@@ -21,17 +16,25 @@ const Shop = () => {
         })
         .then(response => response.json())
         .then(data => {
-            console.log('Add to cart response:', data); // Debug log
             setCart(prevCart => [...prevCart, data]);
         })
         .catch(error => console.error('Error adding item to cart:', error));
     };
-    
+
+    const updateCartItem = (productId, quantity) => {
+        setCart(prevCart => prevCart.map(item => 
+            item.id === productId ? { ...item, quantity } : item
+        ));
+    };
+
+    const removeCartItem = (productId) => {
+        setCart(prevCart => prevCart.filter(item => item.id !== productId));
+    };
 
     return (
         <div>
             <Products addItemToCart={addItemToCart} />
-            <Cart cart={cart} />
+            <Cart cartItems={cart} updateCartItem={updateCartItem} removeCartItem={removeCartItem} />
         </div>
     );
 };

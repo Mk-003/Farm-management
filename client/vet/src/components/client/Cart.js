@@ -1,43 +1,11 @@
-// 
-
-
-
-
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './Cart.css';
 import { NavLink } from 'react-router-dom';
 
-function Cart() {
-    const [cartItems, setCartItems] = useState([]);
+function Cart({ cartItems, updateCartItem, removeCartItem }) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
-
-    useEffect(() => {
-        const fetchCartItems = async () => {
-            setLoading(true);
-            try {
-                const response = await fetch('/userCart', { // Relative URL
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem('token')}` 
-                    }
-                });
-                if (response.ok) {
-                    const data = await response.json();
-                    setCartItems(data.cart_items);
-                } else {
-                    setError('Failed to fetch cart items');
-                }
-            } catch (error) {
-                setError('An error occurred while fetching cart items');
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchCartItems();
-    }, []);
 
     const handlePlaceOrder = async () => {
         setLoading(true);
@@ -45,7 +13,7 @@ function Cart() {
         setSuccess(false);
 
         try {
-            const res = await fetch('/userProductOrders', { // Relative URL
+            const res = await fetch('/userProductOrders', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -58,7 +26,8 @@ function Cart() {
 
             if (res.ok) {
                 setSuccess(true);
-                setCartItems([]);
+                // Clear the cart by removing all items
+                cartItems.forEach(item => removeCartItem(item.id));
             } else {
                 setError('Failed to place order');
             }
@@ -71,19 +40,17 @@ function Cart() {
     };
 
     const handleRemove = (itemToRemove) => {
-        setCartItems(cartItems.filter(item => item.id !== itemToRemove.id));
+        removeCartItem(itemToRemove.id);
     };
 
     const handleIncrease = (itemToIncrease) => {
-        setCartItems(cartItems.map(item => 
-            item.id === itemToIncrease.id ? { ...item, quantity: item.quantity + 1 } : item
-        ));
+        updateCartItem(itemToIncrease.id, itemToIncrease.quantity + 1);
     };
 
     const handleDecrease = (itemToDecrease) => {
-        setCartItems(cartItems.map(item => 
-            item.id === itemToDecrease.id && item.quantity > 1 ? { ...item, quantity: item.quantity - 1 } : item
-        ));
+        if (itemToDecrease.quantity > 1) {
+            updateCartItem(itemToDecrease.id, itemToDecrease.quantity - 1);
+        }
     };
 
     const total = cartItems.reduce((total, item) => {
@@ -96,7 +63,7 @@ function Cart() {
                 <div className="empty-cart">
                     <h2>Your cart is empty</h2>
                     <img src="https://cdn.dribbble.com/users/675297/screenshots/4334597/basti.gif" alt="Empty Cart" />
-                </div>            
+                </div>
             ) : (
                 <>
                     <h2>Shopping Cart</h2>
@@ -114,7 +81,7 @@ function Cart() {
                                     <div className="product-name">
                                         <p>{item.name}</p>
                                         <button onClick={() => handleRemove(item)}>Remove</button>
-                                    </div>   
+                                    </div>
                                 </div>
                                 <p>${item.price}</p>
                                 <div className="quantity">
@@ -150,8 +117,3 @@ function Cart() {
 }
 
 export default Cart;
-
-
-
-
-

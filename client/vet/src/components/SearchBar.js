@@ -71,6 +71,7 @@ function SearchBar() {
     type: ''
   });
   const [products, setProducts] = useState([]);
+  const [searchStatus, setSearchStatus] = useState('');
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -85,7 +86,15 @@ function SearchBar() {
     const response = await fetch(`/userproducts?${query}`);
     const data = await response.json();
     setProducts(data);
-  };
+  // };
+
+  // add
+  if (data.length === 0) {
+    setSearchStatus('No results found');
+  } else {
+    setSearchStatus('');
+  }
+};
 
   const handleProductClick = (product) => {
     navigate(`/product/${product.id}`);
@@ -101,16 +110,11 @@ function SearchBar() {
         value={searchParams.name}
         onChange={handleChange}
       />
-      <input
-        type="text"
-        name="type"
-        placeholder="Type"
-        value={searchParams.type}
-        onChange={handleChange}
-      />
+      
       <button onClick={handleSearch}>Search</button>
       <div>
         <h3>Results:</h3>
+        {searchStatus && <p>{searchStatus}</p>}
         <ul>
           {products.map(product => (
             <li key={product.id} onClick={() => handleProductClick(product)}>
