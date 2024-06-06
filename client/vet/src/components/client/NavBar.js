@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
+import SearchBar from '../SearchBar';
 
 const Navbar = () => {
     const location = useLocation();
@@ -71,17 +72,7 @@ const Navbar = () => {
                         </li>
                         
                     </ul>
-                    <form className="d-flex">
-                        <input
-                            className="form-control ml-2"
-                            type="search"
-                            placeholder="Search"
-                            aria-label="Search"
-                        />
-                        <button className="btn btn-outline-success" type="submit">
-                            Search
-                        </button>
-                    </form>
+                    <SearchBar />
                 </div>
             </div>
         </nav>

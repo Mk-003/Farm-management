@@ -1,7 +1,7 @@
 import React from 'react'
 import './Home.css'
 import Footer from './Footer'
-import SearchBar from './SearchBar'
+// import SearchBar from './SearchBar'
 
 const Home = () => {
     return (
@@ -9,7 +9,7 @@ const Home = () => {
         <div className="home-header">
         <img src="header.jpg" alt="banner" />
         <div className="home-header-text">
-            <SearchBar />
+            {/* <SearchBar /> */}
         <h1>petopia - Your Pet's Paradise</h1>
         <p>Sometimes you are seated at home and all of a sudden, mac, your pet cat is hungry. You look into the can where you store her food and realize after the next serving, all hell will break loose. You need a quick way to order for a refill in time.</p>
         </div>
